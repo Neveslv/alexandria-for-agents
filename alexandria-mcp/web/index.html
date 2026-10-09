@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <title>Alexandria — índice local do vault</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Ir para o conteúdo</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Alexandria</span>
+      <span class="brand-note">índice local · nada sai de 127.0.0.1</span>
+    </div>
+    <div class="topbar-right">
+      <p class="status" id="status" role="status">Verificando índice…</p>
+      <details class="token-box">
+        <summary>Token</summary>
+        <label for="token">Envie <code>X-Alexandria-Token</code> se o servidor exigir.</label>
+        <input id="token" type="password" autocomplete="off" placeholder="deixe vazio se não usa token">
+      </details>
+    </div>
+  </header>
+
+  <div class="workbench">
+    <nav class="rail" aria-label="Seções">
+      <a class="rail-item" href="#buscar" data-view="buscar">
+        <span class="rail-glyph" aria-hidden="true">⌕</span>
+        <span class="rail-label">Buscar</span>
+      </a>
+      <a class="rail-item" href="#capturas" data-view="capturas">
+        <span class="rail-glyph" aria-hidden="true">▤</span>
+        <span class="rail-label">Capturas</span>
+      </a>
+      <a class="rail-item" href="#conexoes" data-view="conexoes">
+        <span class="rail-glyph" aria-hidden="true">◈</span>
+        <span class="rail-label">Conexões</span>
+      </a>
+      <a class="rail-item" href="#saude" data-view="saude">
+        <span class="rail-glyph" aria-hidden="true">⊘</span>
+        <span class="rail-label">Saúde</span>
+      </a>
+    </nav>
+
+    <main id="main">
+      <section id="view-buscar" class="view" hidden>
+        <header class="view-head">
+          <h1>Buscar</h1>
+          <p>Procura no vault inteiro e abre a nota ao lado. Não escreve nada.</p>
+        </header>
+
+        <form id="ask-form" class="query">
+          <label class="sr-only" for="ask-query">O que você procura</label>
+          <input id="ask-query" type="search" required
+                 placeholder="ex.: decisão sobre o kernel HTTP">
+          <button type="submit">Buscar</button>
+        </form>
+
+        <p class="meta" id="ask-meta"></p>
+        <div id="ask-results" class="results"></div>
+
+        <details class="raw" id="ask-raw" hidden>
+          <summary>Resposta completa do vault (texto bruto)</summary>
+          <pre id="ask-raw-body"></pre>
+        </details>
+      </section>
+
+      <section id="view-capturas" class="view" hidden>
+        <header class="view-head">
+          <h1>Capturas</h1>
+          <p>Rascunhos em <code>sessions/</code> aguardando arquivamento. Promover cria a nota
+             definitiva e marca o rascunho como promovido.</p>
+        </header>
+
+        <div class="toolbar">
+          <button type="button" id="inbox-refresh">Atualizar lista</button>
+        </div>
+
+        <p class="meta" id="inbox-meta"></p>
+        <div id="inbox-results" class="results"></div>
+      </section>
+
+      <section id="view-conexoes" class="view" hidden>
+        <header class="view-head">
+          <h1>Conexões</h1>
+          <p>Mostra o que uma nota cita e quem cita ela. Clique em um vizinho para
+             continuar navegando a partir dele.</p>
+        </header>
+
+        <form id="graph-form" class="query">
+          <label class="sr-only" for="graph-input">Nota de partida</label>
+          <input id="graph-input" type="text" required
+                 placeholder="título ou caminho, ex.: Lane C web local">
+          <button type="submit">Ver conexões</button>
+        </form>
+
+        <p class="meta" id="graph-meta"></p>
+        <div id="graph-results" class="results"></div>
+      </section>
+
+      <section id="view-saude" class="view" hidden>
+        <header class="view-head">
+          <h1>Saúde</h1>
+          <p>Notas sem ninguém apontando para elas, notas paradas há mais de 30 dias e
+             arquivos que o índice não conseguiu ler.</p>
+        </header>
+
+        <div class="toolbar">
+          <button type="button" id="health-refresh">Recarregar</button>
+        </div>
+
+        <div id="health-tiles" class="tiles"></div>
+        <div id="health-results" class="results"></div>
+
+        <details class="raw" id="health-raw" hidden>
+          <summary>Estatísticas completas do índice</summary>
+          <pre id="health-raw-body"></pre>
+        </details>
+      </section>
+    </main>
+
+    <aside class="reader" id="reader" hidden aria-label="Leitor de nota">
+      <header class="reader-head">
+        <div>
+          <h2 id="reader-title">—</h2>
+          <p class="path" id="reader-path"></p>
+        </div>
+        <button type="button" id="reader-close" aria-label="Fechar leitor">✕</button>
+      </header>
+      <div class="reader-actions">
+        <button type="button" id="reader-graph">Ver conexões</button>
+        <button type="button" id="reader-copy">Copiar caminho</button>
+      </div>
+      <div class="reader-body" id="reader-body"></div>
+    </aside>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

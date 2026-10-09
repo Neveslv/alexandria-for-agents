@@ -1,0 +1,12 @@
+{
+  "name": "alexandria-for-agents",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Persistent Markdown memory for AI agents through MCP and Obsidian",
+  "bin": {
+    "alexandria-http": "./bin/alexandria-http"
+  },
+  "scripts": {
+    "http": "node http/server.js"
+  }
+}
