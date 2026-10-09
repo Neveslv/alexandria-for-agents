@@ -1,0 +1,17 @@
+# Local vault index and settings
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+.env
+.env.*
+
+# Local installer output
+*.bak.*
+AI-PROMPT.INSTALLED.md
+rules/*.INSTALLED.mdc
+
+# Node tooling
+node_modules/
+npm-debug.log*

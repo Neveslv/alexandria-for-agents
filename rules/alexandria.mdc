@@ -1,0 +1,31 @@
+---
+description: Alexandria Obsidian memory — recall before, save after
+alwaysApply: true
+---
+
+# Alexandria (memória operacional obrigatória)
+
+Vault Obsidian: `__VAULT_PATH__`
+MCP: `alexandria` (tools `vault_*`)
+Agent provenance: `__AGENT__`
+
+## Protocolo por turno
+
+1. **ANTES** de resposta substantiva, exploração ou execução: `vault_recall` com 2–5 palavras do pedido.
+2. Tarefas não triviais / histórico: `vault_context`; detalhes com `vault_search` / `vault_read`.
+3. Não invente memória se o vault estiver vazio — diga que não há contexto.
+4. **DEPOIS** de resposta, plano, decisão, fix, validação ou bloqueio: `vault_auto_save`.
+5. Conhecimento reutilizável: `vault_write` com `overwrite: false`, wikilinks e proveniência (Agente, Plugin/Skill, Projeto/repo, Fonte).
+
+## Onde gravar
+
+Categorias raiz apenas: `concepts`, `decisions`, `entities`, `patterns`, `plans`, `postmortems`, `projects`, `research`, `sessions`, `tools`.
+
+Nunca pastas `Codex/`, `Nitro/`, `shared/`, `Cursor/` para memória nova.
+`agent` / `source` ficam no frontmatter.
+
+## Guardrails
+
+- Sem tokens, cookies, PATs, `.env`, logs brutos ou PII no vault.
+- Se o MCP falhar: continue e declare que a memória não foi consultada/persistida.
+- Sem commit/push/PR/deploy sem autorização explícita no turno.

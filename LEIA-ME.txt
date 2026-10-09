@@ -1,0 +1,13 @@
+ALEXANDRIA FOR AGENTS
+
+Memoria persistente para agentes de IA via MCP, armazenada em notas Markdown
+num vault Obsidian.
+
+Instalacao rapida:
+
+  node install.js --vault "/caminho/absoluto/do/vault" --client codex
+
+Clientes suportados pelo instalador: codex, cursor, claude-code, gemini-cli.
+Veja README.md para requisitos, clientes e instrucoes de uso.
+
+Criado por Neves e Nicolas Vlad.
