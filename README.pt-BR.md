@@ -98,6 +98,12 @@ Variáveis de ambiente do servidor:
 | `ALEXANDRIA_SETTINGS_PATH` | Configuração opcional de expansão de busca |
 | `ALEXANDRIA_EXPANSION_CACHE` | Cache local de expansão de busca |
 
+## Telemetria local
+
+Use `--telemetry` durante a instalação para ativar logs JSONL locais com rotação e retenção limitada. Para registros MCP já existentes, defina `ALEXANDRIA_TELEMETRY=1` no ambiente do servidor e reconecte o cliente. Os logs não incluem argumentos, conteúdo das notas, resultados nem credenciais.
+
+Execute `node alexandria-mcp/telemetry-summary.js` para consultar sucessos, erros, latência mediana e p95 por ferramenta e período. Um hook opcional do Codex observa tentativas pelo cliente separadamente. Timeouts e falhas de conexão do host ficam explicitamente indisponíveis quando não podem ser observados. Veja a [configuração e os limites da telemetria](docs/telemetry.md).
+
 ## Arquivos do projeto
 
 - `alexandria-mcp/` — servidor MCP, kernel do vault, ponte HTTP e interface local.

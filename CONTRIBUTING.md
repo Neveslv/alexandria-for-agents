@@ -22,7 +22,7 @@ External contributors should work from a fork; direct write access to the main r
 
 ## Development checks
 
-This repository does not currently define an automated test suite. For JavaScript changes, run syntax checks for the files you changed. For example:
+Run the dependency-free telemetry and protocol tests with `node --test tests/*.test.js` (Node.js 18 or later). For JavaScript changes, also run syntax checks for the files you changed. For example:
 
 ```bash
 node --check install.js

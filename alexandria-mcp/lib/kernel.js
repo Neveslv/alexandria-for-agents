@@ -1415,10 +1415,10 @@ function handleVaultRecall(args) {
 function handleVaultRead(args) {
   refreshVaultIndex();
   const p = args.path || '';
-  if (!p) return text('Path obrigatório.');
+  if (!p) return errorText('Path obrigatório.');
 
   const resolved = resolveVaultReadPath(p);
-  if (resolved.error) return text(resolved.error);
+  if (resolved.error) return errorText(resolved.error);
   if (resolved.filePath) {
     return text(fs.readFileSync(resolved.filePath, 'utf8'));
   }
@@ -1431,7 +1431,7 @@ function handleVaultRead(args) {
     if (safe) return text(fs.readFileSync(safe, 'utf8'));
   }
 
-  return text(`Nota não encontrada: ${p}`);
+  return errorText(`Nota não encontrada: ${p}`);
 }
 
 function handleVaultList(args) {
@@ -1545,7 +1545,7 @@ function formatContextSection(page, includeObservations = true) {
 function buildGraphContextFromSource(args) {
   const source = args.source || args.query || '';
   const relPath = relPathFromSource(source);
-  if (!relPath) return text(`Fonte não encontrada: ${source}`);
+  if (!relPath) return errorText(`Fonte não encontrada: ${source}`);
 
   const depth = clampInteger(args.depth, 1, 0, 3);
   const maxRelated = clampInteger(args.max_related, 10, 0, 30);
@@ -1597,7 +1597,7 @@ function handleVaultContext(args) {
   const maxTokens = clampInteger(args.max_tokens, 3000, 200, 20000);
   const limit = clampInteger(args.limit, 10, 1, 50);
 
-  if (!query.trim()) return text('Query obrigatória.');
+  if (!query.trim()) return errorText('Query obrigatória.');
 
   let results = hybridSearch(query, limit * 2);
   results = applyRecencyBoost(results, query);
@@ -1658,10 +1658,10 @@ function extraFrontmatterLines(args) {
 
 function handleVaultWrite(args) {
   const { title, content, category } = args;
-  if (!title || !content) return text('title e content são obrigatórios.');
+  if (!title || !content) return errorText('title e content são obrigatórios.');
 
   const cat = normalizeCategory(category);
-  if (!cat) return text(`Categoria inválida. Use uma destas: ${[...WRITE_CATEGORIES].join(', ')}.`);
+  if (!cat) return errorText(`Categoria inválida. Use uma destas: ${[...WRITE_CATEGORIES].join(', ')}.`);
 
   const safeTitle = cleanInline(title);
   const body = String(content);
@@ -1673,9 +1673,9 @@ function handleVaultWrite(args) {
 
   const slug = slugify(safeTitle);
   const filePath = path.join(dir, `${slug}.md`);
-  if (!safeVaultWritePath(filePath)) return text('Path fora do vault ou symlink inseguro.');
+  if (!safeVaultWritePath(filePath)) return errorText('Path fora do vault ou symlink inseguro.');
   if (args.overwrite === false && fs.existsSync(filePath)) {
-    return text(`Nota já existe: ${vaultRelativePath(cat, `${slug}.md`)}. Use overwrite: true para substituir.`);
+    return errorText(`Nota já existe: ${vaultRelativePath(cat, `${slug}.md`)}. Use overwrite: true para substituir.`);
   }
 
   const now = new Date().toISOString();
@@ -1731,7 +1731,7 @@ function handleVaultWrite(args) {
 
 function handleVaultAutoSave(args) {
   const { title, summary, decisions } = args;
-  if (!title || !summary) return text('title e summary são obrigatórios.');
+  if (!title || !summary) return errorText('title e summary são obrigatórios.');
 
   const safeTitle = cleanInline(title);
   const safeSummary = String(summary);
@@ -1746,7 +1746,7 @@ function handleVaultAutoSave(args) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
   const filePath = path.join(dir, `${slug}.md`);
-  if (!safeVaultWritePath(filePath)) return text('Path fora do vault ou symlink inseguro.');
+  if (!safeVaultWritePath(filePath)) return errorText('Path fora do vault ou symlink inseguro.');
 
   const content = [
     '---',
@@ -1883,6 +1883,7 @@ function handleVaultRecentActivity(args) {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 function text(t) { return { content: [{ type: 'text', text: t }] }; }
+function errorText(t) { return { ...text(t), isError: true }; }
 
 function findFileRecursive(dir, name) {
   try {
@@ -2067,7 +2068,7 @@ function handleRequest(request) {
         case 'vault_list': return handleVaultList(args || {});
         case 'vault_recent_activity': return handleVaultRecentActivity(args || {});
         case 'vault_stats': return handleVaultStats();
-        default: return text(`Tool desconhecida: ${name}`);
+        default: return errorText(`Tool desconhecida: ${name}`);
       }
     }
 
@@ -2125,7 +2126,7 @@ function collectSearchResults(args) {
 
 function handleVaultSearch(args) {
   const packed = collectSearchResults(args);
-  if (packed.error) return text(packed.error);
+  if (packed.error) return errorText(packed.error);
   if (packed.items.length === 0) {
     return text(`Nenhum resultado para "${packed.query}". Tente remover filtros, ampliar category/tags/agent, trocar entity_type/search_type, usar vault_list para navegar categorias, ou consultar vault_recent_activity.`);
   }
@@ -2391,7 +2392,7 @@ function dispatch(name, args = {}) {
     case 'vault_list': return handleVaultList(args);
     case 'vault_recent_activity': return handleVaultRecentActivity(args);
     case 'vault_stats': return handleVaultStats();
-    default: return text(`Tool desconhecida: ${name}`);
+    default: return errorText(`Tool desconhecida: ${name}`);
   }
 }
 
