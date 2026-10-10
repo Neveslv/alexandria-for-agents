@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible problem with Alexandria for Agents.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before submitting, search existing issues. Do not include vault contents, personal notes, credentials, tokens, or raw logs.
+  - type: input
+    id: version
+    attributes:
+      label: Alexandria version or commit
+      description: Include the release, commit, or date when you installed it.
+      placeholder: v1.0.0 or commit SHA
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: AI client and version
+      placeholder: Codex CLI, Cursor, Claude Code, Gemini CLI, or other
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows, macOS, or Linux (include version if known)
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest sequence that reproduces the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Redact personal paths, vault content, tokens, and other sensitive data.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized error details
+      description: Include only the relevant error message. Remove secrets and personal information.
+    validations:
+      required: false

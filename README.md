@@ -1,39 +1,41 @@
 # Alexandria for Agents
 
-Memória persistente para agentes de IA, guardada como Markdown em um vault Obsidian e acessada por ferramentas MCP. Alexandria conecta o contexto de uma sessão às próximas: o agente consulta o vault no início do trabalho, executa a tarefa e salva um resumo ao final.
+[English](README.md) | [Português (Brasil)](README.pt-BR.md)
 
-## O que faz
+Persistent, local-first memory for AI agents, stored as Markdown in an Obsidian vault and accessed through MCP tools. Alexandria carries useful context from one session into the next: an agent recalls relevant notes before working and saves a concise summary afterward.
 
-- Lê e grava notas Markdown no vault local do usuário.
-- Indexa o vault em SQLite para busca textual e semântica local.
-- Oferece ferramentas MCP como `vault_recall`, `vault_search`, `vault_read`, `vault_context`, `vault_write`, `vault_auto_save` e `vault_stats`.
-- Instala o servidor e, nos clientes suportados, registra o MCP e ativa instruções persistentes para o agente usar Alexandria automaticamente.
-- Inclui uma API HTTP local e uma interface web opcional para pesquisar e navegar pelo vault.
+## What it does
 
-Os arquivos Markdown permanecem legíveis e editáveis no Obsidian. O índice SQLite é auxiliar e pode ser recriado a partir das notas. A instalação é local; nenhuma chave de API é necessária para a busca padrão.
+- Reads and writes Markdown notes in your local vault.
+- Indexes the vault in SQLite for local full-text and semantic search.
+- Provides MCP tools including `vault_recall`, `vault_search`, `vault_read`, `vault_context`, `vault_write`, `vault_auto_save`, and `vault_stats`.
+- Installs the server and, for supported clients, registers the MCP server and adds persistent instructions so the agent uses Alexandria automatically.
+- Includes a local HTTP API and an optional web interface for searching and browsing the vault.
 
-## Requisitos
+Markdown files remain readable and editable in Obsidian. The SQLite index is auxiliary and can be rebuilt from the notes. Installation is local; the default search does not require an API key.
 
-- Node.js 18 ou mais recente
-- SQLite 3 (`sqlite3`) disponível no `PATH`
-- Um vault Obsidian existente ou um diretório que você deseja inicializar
-- Um dos clientes suportados para integração automática: Codex CLI, Cursor, Claude Code ou Gemini CLI
+## Requirements
 
-Os próprios clientes são instalados separadamente.
+- Node.js 18 or later
+- SQLite 3 (`sqlite3`) available on `PATH`
+- An existing Obsidian vault, or a directory you want to initialize
+- For automatic integration: Codex CLI, Cursor, Claude Code, or Gemini CLI
 
-## Instalação
+Install the AI clients separately.
 
-Clone o repositório e rode o instalador, informando o caminho absoluto do vault e o cliente:
+## Installation
+
+Clone the repository and run the installer with the absolute path to your vault and the client to configure.
 
 ### Windows PowerShell
 
 ```powershell
 git clone https://github.com/Neveslv/alexandria-for-agents.git
 cd alexandria-for-agents
-node .\install.js --vault "C:\Users\seu-usuario\Alexandria" --client codex
+node .\install.js --vault "C:\Users\your-user\Alexandria" --client codex
 ```
 
-### macOS ou Linux
+### macOS or Linux
 
 ```bash
 git clone https://github.com/Neveslv/alexandria-for-agents.git
@@ -41,69 +43,73 @@ cd alexandria-for-agents
 node install.js --vault "$HOME/Documents/Alexandria" --client codex
 ```
 
-Opções de cliente: `codex`, `cursor`, `claude-code`, `gemini-cli` ou `all`. `all` configura os clientes suportados que estiverem disponíveis; instale cada cliente antes de executar o instalador. Para ver as opções, rode `node install.js --help`.
+Supported client values: `codex`, `cursor`, `claude-code`, `gemini-cli`, or `all`. The `all` option configures every supported client that is available; install each client before running the installer. To see all options, run `node install.js --help`.
 
-O instalador copia o servidor para `~/.alexandria/mcp-server/`, inicializa o vault e seu índice, e configura o cliente escolhido. Nos arquivos JSON, preserva as demais entradas e cria um backup antes de gravar. Se o Codex ou o Claude Code já tiverem um servidor MCP chamado Alexandria, a entrada existente é mantida. A instalação pode ser simulada com `--dry-run`.
+The installer copies the server to `~/.alexandria/mcp-server/`, initializes the vault and its index, and configures the selected client. It preserves other entries in JSON configuration files and creates backups before changing files. If Codex or Claude Code already has an MCP server named Alexandria, the existing entry is left unchanged. Preview the installation with `--dry-run`.
 
-| Cliente | Registro MCP | Instruções sempre ativas |
+| Client | MCP registration | Persistent instructions |
 | --- | --- | --- |
 | Codex | `codex mcp add` | `~/.codex/AGENTS.md` |
 | Cursor | `~/.cursor/mcp.json` | `~/.cursor/rules/alexandria.mdc` |
 | Claude Code | `claude mcp add --scope user` | `~/.claude/CLAUDE.md` |
 | Gemini CLI | `~/.gemini/settings.json` | `~/.gemini/GEMINI.md` |
 
-As instruções ensinam o agente a consultar a memória antes do trabalho e a salvar um resumo depois. O instalador acrescenta ou atualiza apenas o bloco de Alexandria nos arquivos de instrução existentes.
+The installed instructions tell the agent to consult memory before work and save a summary afterward. The installer only adds or updates the Alexandria block in existing instruction files.
 
-## Como usar
+## How to use
 
-1. Reinicie ou recarregue o cliente após a instalação e abra uma nova conversa.
-2. Peça ao agente para executar `vault_stats` e confirme que o servidor está conectado.
-3. Converse normalmente. As instruções instaladas orientam o agente a chamar `vault_recall` antes de responder e `vault_auto_save` ao final.
-4. Para registrar um conhecimento que deve ser recuperado depois, use `vault_write` com `overwrite: false`.
-5. Abra no Obsidian a mesma pasta informada ao instalador para visualizar e editar as notas.
+1. Restart or reload the selected client, then open a new conversation.
+2. Ask the agent to run `vault_stats` and confirm that the server is connected.
+3. Work normally. The installed instructions guide the agent to call `vault_recall` before responding and `vault_auto_save` at the end.
+4. To save knowledge for future retrieval, use `vault_write` with `overwrite: false`.
+5. Open the same folder you gave the installer in Obsidian to view and edit your notes.
 
-Para outro cliente compatível com MCP, use a configuração local do servidor:
+For another MCP-compatible client, configure the local server manually:
 
 ```json
 {
   "mcpServers": {
     "alexandria": {
       "command": "node",
-      "args": ["/caminho/para/.alexandria/mcp-server/server.js"],
+      "args": ["/path/to/.alexandria/mcp-server/server.js"],
       "env": {
-        "ALEXANDRIA_VAULT_DIR": "/caminho/absoluto/do/vault",
-        "ALEXANDRIA_NAMESPACE": "Nome do agente",
-        "ALEXANDRIA_INDEX_DB": "/caminho/para/.alexandria/vault-index.db"
+        "ALEXANDRIA_VAULT_DIR": "/absolute/path/to/vault",
+        "ALEXANDRIA_NAMESPACE": "Agent name",
+        "ALEXANDRIA_INDEX_DB": "/path/to/.alexandria/vault-index.db"
       }
     }
   }
 }
 ```
 
-O formato e o local do arquivo de configuração variam entre os clientes. Clientes sem um dos instaladores integrados também precisam receber `AI-PROMPT.md` nas instruções persistentes para adotar o fluxo de memória automaticamente.
+Configuration file formats and locations vary by client. Clients without a built-in installer adapter also need `AI-PROMPT.md` added to their persistent instructions to use the memory workflow automatically.
 
-## Configuração e privacidade
+## Configuration and privacy
 
-O instalador não pede credenciais. O servidor lê e grava no caminho passado em `--vault`; não envie segredos, tokens, cookies, `.env`, logs brutos ou dados pessoais sensíveis para as notas. A expansão remota por LLM permanece desativada por padrão.
+The installer does not request credentials. The server reads and writes only under the path passed to `--vault`. Do not save secrets, tokens, cookies, `.env` files, raw logs, or sensitive personal data in your notes. Remote LLM-based search expansion is disabled by default.
 
-Variáveis do servidor:
+Server environment variables:
 
-| Variável | Uso |
+| Variable | Purpose |
 | --- | --- |
-| `ALEXANDRIA_VAULT_DIR` | Caminho absoluto do vault |
-| `ALEXANDRIA_NAMESPACE` | Proveniência do agente nas novas notas |
-| `ALEXANDRIA_INDEX_DB` | Caminho do índice SQLite local |
-| `ALEXANDRIA_SETTINGS_PATH` | Configuração opcional de expansão de busca |
-| `ALEXANDRIA_EXPANSION_CACHE` | Cache local de expansão de busca |
+| `ALEXANDRIA_VAULT_DIR` | Absolute path to the vault |
+| `ALEXANDRIA_NAMESPACE` | Agent provenance for new notes |
+| `ALEXANDRIA_INDEX_DB` | Path to the local SQLite index |
+| `ALEXANDRIA_SETTINGS_PATH` | Optional search-expansion settings |
+| `ALEXANDRIA_EXPANSION_CACHE` | Local search-expansion cache |
 
-## Componentes
+## Project files
 
-- `alexandria-mcp/` — servidor MCP, kernel do vault, ponte HTTP e interface local.
-- `install.js` — instalador multiplataforma para os clientes listados acima.
-- `AI-PROMPT.md` — instruções de memória para agentes.
-- `rules/alexandria.mdc` — regra always-on do Cursor.
-- `INSTRUCTIONS-FOR-AI.md` — checklist para agentes que auxiliam na instalação.
+- `alexandria-mcp/` — MCP server, vault kernel, HTTP bridge, and local interface.
+- `install.js` — cross-platform installer for the clients listed above.
+- `AI-PROMPT.md` — memory instructions for agents.
+- `rules/alexandria.mdc` — always-on Cursor rule.
+- `INSTRUCTIONS-FOR-AI.md` — checklist for agents assisting with installation.
 
-## Autoria
+## Contributing
 
-Criado por **Neves e Nicolas Vlad**.
+Bug reports, ideas, and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or pull request.
+
+## Authors
+
+Created by **Neves and Nicolas Vlad**.
