@@ -17,6 +17,11 @@ const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { openStore } = require('./storage');
+const { createIndexSync } = require('./index-sync');
+const { createRetrievalPipeline } = require('./retrieval/pipeline');
+const { createEmbedder, createLocalModelLoader } = require('./retrieval/embeddings');
+const { migrateEmbeddings } = require('./migrations/002-embeddings');
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 const HOME = process.env.HOME || os.homedir();
@@ -127,107 +132,53 @@ function defaultHotContext() {
   ].join('\n');
 }
 
+let store = null, indexSync = null, dataReady = null, closing = false, trainedEmbedder = null, retrievalPipeline = null;
+const retrievalFlags = Object.freeze({
+  rrf: process.env.ALEXANDRIA_RETRIEVAL_RRF === '1',
+  authority: process.env.ALEXANDRIA_RETRIEVAL_AUTHORITY === '1',
+  mode: ['hash','lexical','trained'].includes(process.env.ALEXANDRIA_EMBEDDING_MODE) ? process.env.ALEXANDRIA_EMBEDDING_MODE : 'hash',
+  abstention: process.env.ALEXANDRIA_ABSTENTION === '1',
+});
+const modelIdentity = Object.freeze({provider:'transformers.js', model:process.env.ALEXANDRIA_MODEL_ID || 'Xenova/multilingual-e5-small', revision:process.env.ALEXANDRIA_MODEL_REVISION || '761b726dd34fb83930e26aab4e9ac3899aa1fa78', dimension:clampInteger(process.env.ALEXANDRIA_MODEL_DIMENSION,384,1,4096)});
+let retrievalState = {mode:retrievalFlags.mode, fallback:null};
+function getRetrievalPipeline() {
+  if (!retrievalPipeline) {
+    let calibration = null;
+    if (retrievalFlags.abstention && process.env.ALEXANDRIA_ABSTENTION_CALIBRATION) {
+      try { calibration = JSON.parse(fs.readFileSync(process.env.ALEXANDRIA_ABSTENTION_CALIBRATION,'utf8')); } catch {}
+    }
+    retrievalPipeline = createRetrievalPipeline({
+      flags: retrievalFlags, modelIdentity: retrievalFlags.mode === 'trained' ? modelIdentity : null, calibration,
+      getRows: () => sqliteRows('SELECT * FROM pages ORDER BY path;'),
+      indexSearch: (query,limit) => indexSearch(query,limit,5000), hashSearch: semanticSearch,
+      getEmbedder: () => {
+        if (!trainedEmbedder) {
+          const loadModel = createLocalModelLoader({modelRoot:process.env.ALEXANDRIA_MODEL_DIR,identity:modelIdentity});
+          trainedEmbedder = createEmbedder({identity:modelIdentity,loadModel,store:getStore()});
+        }
+        return trainedEmbedder;
+      },
+    });
+  }
+  return retrievalPipeline;
+}
+function getStore() {
+  if (closing) throw new Error('Storage is closed');
+  if (!store) { store = openStore({dbPath: INDEX_DB}); migrateEmbeddings(store); }
+  return store;
+}
 function ensureVaultReady() {
-  fs.mkdirSync(VAULT_DIR, { recursive: true });
+  fs.mkdirSync(VAULT_DIR, {recursive: true});
   const hotPath = path.join(VAULT_DIR, 'hot.md');
   if (!fs.existsSync(hotPath)) {
     const safeHot = safeVaultWritePath(hotPath);
     if (safeHot) fs.writeFileSync(safeHot, defaultHotContext());
   }
-
-  fs.mkdirSync(path.dirname(INDEX_DB), { recursive: true });
-  sqliteExec(`
-    CREATE TABLE IF NOT EXISTS pages (
-      path TEXT PRIMARY KEY,
-      title TEXT,
-      category TEXT,
-      content TEXT,
-      summary TEXT,
-      modified TEXT,
-      links INTEGER DEFAULT 0,
-      permalink TEXT,
-      note_type TEXT,
-      tags TEXT,
-      metadata TEXT,
-      checksum TEXT,
-      size INTEGER DEFAULT 0
-    );
-    CREATE VIRTUAL TABLE IF NOT EXISTS pages_fts USING fts5(
-      path UNINDEXED,
-      title,
-      category,
-      content,
-      summary
-    );
-    CREATE TABLE IF NOT EXISTS embeddings (
-      path TEXT PRIMARY KEY,
-      vector TEXT
-    );
-    CREATE TABLE IF NOT EXISTS observations (
-      id TEXT PRIMARY KEY,
-      path TEXT,
-      title TEXT,
-      category TEXT,
-      content TEXT,
-      tags TEXT,
-      context TEXT,
-      permalink TEXT,
-      modified TEXT
-    );
-    CREATE TABLE IF NOT EXISTS relations (
-      id TEXT PRIMARY KEY,
-      path TEXT,
-      title TEXT,
-      relation_type TEXT,
-      target TEXT,
-      context TEXT,
-      permalink TEXT,
-      modified TEXT
-    );
-  `);
-  ensurePageColumns();
-
-  indexMarkdownVault();
+  getStore();
 }
-
-// ─── SQLite helper ──────────────────────────────────────────────────────────
-function sqlite(sql) {
-  try {
-    return execFileSync('sqlite3', ['-json', INDEX_DB], {
-      input: sql, encoding: 'utf8', timeout: 15000, maxBuffer: 50 * 1024 * 1024,
-      stdio: ['pipe', 'pipe', 'pipe'],
-    }).trim();
-  } catch (e) { return null; }
-}
-
-function sqliteExec(sql) {
-  try {
-    execFileSync('sqlite3', [INDEX_DB], {
-      input: sql, encoding: 'utf8', timeout: 15000,
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
-    return true;
-  } catch { return false; }
-}
-
-function sqliteRows(sql) {
-  const raw = sqlite(sql);
-  if (!raw) return [];
-  try { return JSON.parse(raw); } catch { return []; }
-}
-
-function ensurePageColumns() {
-  for (const [name, type] of [
-    ['permalink', 'TEXT'],
-    ['note_type', 'TEXT'],
-    ['tags', 'TEXT'],
-    ['metadata', 'TEXT'],
-    ['checksum', 'TEXT'],
-    ['size', 'INTEGER DEFAULT 0'],
-  ]) {
-    sqliteExec(`ALTER TABLE pages ADD COLUMN ${name} ${type};`);
-  }
-}
+function sqlite(sql) { return JSON.stringify(getStore().all(sql)); }
+function sqliteExec(sql) { getStore().exec(sql); return true; }
+function sqliteRows(sql) { return getStore().all(sql); }
 
 function stripFrontmatter(markdown) {
   if (!markdown.startsWith('---')) return markdown;
@@ -500,7 +451,8 @@ function upsertPageIndex({ relPath, title, category, content, summary, modified,
   sqliteExec(`
     INSERT OR REPLACE INTO pages (path, title, category, content, summary, modified, links, permalink, note_type, tags, metadata, checksum, size)
     VALUES ('${escSql(relPath)}', '${escSql(title)}', '${escSql(category)}', '${escSql(content)}', '${escSql(summary)}', '${escSql(modified)}', ${safeLimitLinks}, '${escSql(permalink)}', '${escSql(noteType)}', '${sqlJson(tags)}', '${sqlJson(metadata)}', '${checksumContent(content)}', ${Number(size) || Buffer.byteLength(String(content || ''), 'utf8')});
-    INSERT OR REPLACE INTO pages_fts (path, title, category, content, summary)
+    DELETE FROM pages_fts WHERE path = '${escSql(relPath)}';
+    INSERT INTO pages_fts (path, title, category, content, summary)
     VALUES ('${escSql(relPath)}', '${escSql(title)}', '${escSql(category)}', '${escSql(content)}', '${escSql(summary)}');
   `);
 }
@@ -554,8 +506,8 @@ function applyEffectivePermalink(parsed, relPath) {
   return parsed;
 }
 
-function indexMarkdownFile(filePath, existingContent = null, existingStat = null) {
-  if (!isInsideDir(VAULT_DIR, filePath)) return null;
+function indexMarkdownFileUnwrapped(filePath, existingContent = null, existingStat = null) {
+  if (!isInsideDir(VAULT_DIR, filePath) || !safeVaultRealPath(filePath)) throw new Error('Unsafe vault path');
   const content = existingContent ?? fs.readFileSync(filePath, 'utf8');
   const relPath = relVaultPath(filePath);
   const stat = existingStat ?? fs.statSync(filePath);
@@ -587,7 +539,13 @@ function indexMarkdownFile(filePath, existingContent = null, existingStat = null
   return relPath;
 }
 
-function deleteIndexedPath(relPath) {
+function indexMarkdownFile(filePath, content = null, stat = null) {
+  const rel = getStore().transaction(() => indexMarkdownFileUnwrapped(filePath, content, stat));
+  if (trainedEmbedder) trainedEmbedder.invalidate(rel);
+  return rel;
+}
+
+function deleteIndexedPathUnwrapped(relPath) {
   sqliteExec(`
     DELETE FROM pages WHERE path = '${escSql(relPath)}';
     DELETE FROM pages_fts WHERE path = '${escSql(relPath)}';
@@ -597,52 +555,38 @@ function deleteIndexedPath(relPath) {
   LOCAL_EMBEDDING_STORE.delete(relPath);
 }
 
-function indexMarkdownVault() {
-  sqliteExec('DELETE FROM pages; DELETE FROM pages_fts; DELETE FROM observations; DELETE FROM relations;');
-  LOCAL_EMBEDDING_STORE.clear();
-
-  const files = walkMarkdownFiles(VAULT_DIR);
-  for (const filePath of files) {
-    try {
-      indexMarkdownFile(filePath);
-    } catch (error) {
-      recordIndexFailure(relVaultPath(filePath), error);
-    }
-  }
+function deleteIndexedPath(relPath) {
+  getStore().transaction(() => deleteIndexedPathUnwrapped(relPath));
+  if (trainedEmbedder) trainedEmbedder.invalidate(relPath);
 }
+// External edits converge through watcher/debounce, never a scan per query.
+function refreshVaultIndex() {}
+async function ensureDataReady() {
+  if (closing) throw new Error('Storage is closed');
+  if (!dataReady) dataReady = (async () => {
+    ensureVaultReady(); loadEmbeddings(); loadExpansionCache();
+    indexSync = createIndexSync({vaultDir: VAULT_DIR,
+      initialPaths: sqliteRows('SELECT path FROM pages;').map(row=>row.path),
+      onUpsert: rel => indexMarkdownFile(path.join(VAULT_DIR, rel)),
+      onDelete: rel => deleteIndexedPath(rel),
+      onFailure: (rel, error) => recordIndexFailure(rel, error),
+    });
+    try { await indexSync.start(); } catch (error) { recordIndexFailure('',error); }
+    // Preserve the published startup representation for the storage-only gate.
+    loadEmbeddings();
 
-function syncMarkdownVault() {
-  const files = walkMarkdownFiles(VAULT_DIR);
-  const seen = new Set();
-  const existingRows = new Map(sqliteRows('SELECT path, checksum, size FROM pages;').map(row => [row.path, row]));
-
-  for (const filePath of files) {
-    try {
-      if (!isInsideDir(VAULT_DIR, filePath)) continue;
-      const relPath = relVaultPath(filePath);
-      seen.add(relPath);
-      const stat = fs.statSync(filePath);
-      const existing = existingRows.get(relPath);
-      if (existing && Number(existing.size || 0) === stat.size) {
-        const content = fs.readFileSync(filePath, 'utf8');
-        const checksum = checksumContent(content);
-        if (existing.checksum === checksum) continue;
-        indexMarkdownFile(filePath, content, stat);
-      } else {
-        indexMarkdownFile(filePath, null, stat);
-      }
-    } catch (error) {
-      recordIndexFailure(isInsideDir(VAULT_DIR, filePath) ? relVaultPath(filePath) : filePath, error);
-    }
-  }
-
-  for (const relPath of existingRows.keys()) {
-    if (!seen.has(relPath)) deleteIndexedPath(relPath);
-  }
+  })().catch(async error => {
+    await indexSync?.close(); indexSync = null;
+    store?.close(); store = null; dataReady = null; throw error;
+  });
+  await dataReady;
+  try { await indexSync.flush(); } catch (error) { recordIndexFailure('',error); }
 }
-
-function refreshVaultIndex() {
-  try { syncMarkdownVault(); } catch {}
+async function reconcileIndex() { await ensureDataReady(); await indexSync.reconcile(); }
+async function close() {
+  if (closing) return;
+  if (dataReady) { try { await dataReady; } catch {} }
+  try { await indexSync?.close(); } finally { try { await trainedEmbedder?.close(); } finally { store?.close(); store = null; closing = true; } }
 }
 
 // ─── Embedding Engine ───────────────────────────────────────────────────────
@@ -925,8 +869,8 @@ function bestMatchedChunkInfo(markdown, query) {
   };
 }
 
-function ftsRaw(ftsQuery, limit, rawQuery = '') {
-  const safeLimit = clampInteger(limit, 10, 1, 50);
+function ftsRaw(ftsQuery, limit, rawQuery = '', maxLimit = 50) {
+  const safeLimit = clampInteger(limit, 10, 1, maxLimit);
   const rows = sqliteRows(`SELECT p.path, p.title, p.category, p.summary, p.links, p.modified, p.permalink, p.content, substr(p.content, 1, 600) as snippet, f.rank FROM pages_fts f JOIN pages p ON p.path = f.path WHERE pages_fts MATCH '${escSql(ftsQuery)}' ORDER BY f.rank LIMIT ${safeLimit};`);
   return rows.map(r => {
     const match = bestMatchedChunkInfo(r.content || r.snippet || r.summary || '', rawQuery);
@@ -964,25 +908,25 @@ function mergeResults(...arrays) {
   return [...map.values()].sort((a, b) => b.score - a.score);
 }
 
-function indexSearch(query, limit = 15) {
+function indexSearch(query, limit = 15, maxLimit = 50) {
   const esc = (s) => s.replace(/'/g, "''").replace(/"/g, '""');
-  const safeLimit = clampInteger(limit, 15, 1, 50);
+  const safeLimit = clampInteger(limit, 15, 1, maxLimit);
   const rawTokens = query.split(/\s+/).filter(t => t.length >= 2 && !FTS_STOPWORDS.has(t.toLowerCase()));
   if (rawTokens.length === 0) {
     const fallback = query.split(/\s+/).filter(t => t.length >= 2);
     if (fallback.length === 0) return [];
     const fts = fallback.map(t => `"${esc(t)}"*`).join(' OR ');
-    return ftsRaw(fts, safeLimit, query);
+    return ftsRaw(fts, safeLimit, query, maxLimit);
   }
 
   const ftsTokens = rawTokens.map(t => `"${esc(t)}"*`);
 
   // Strategy 1: AND (high precision)
-  let results = ftsRaw(ftsTokens.join(' AND '), safeLimit, query);
+  let results = ftsRaw(ftsTokens.join(' AND '), safeLimit, query, maxLimit);
 
   // Strategy 2: OR (higher recall)
   if (results.length < 3 && rawTokens.length >= 2) {
-    const orResults = ftsRaw(ftsTokens.join(' OR '), safeLimit, query);
+    const orResults = ftsRaw(ftsTokens.join(' OR '), safeLimit, query, maxLimit);
     results = mergeResults(results, orResults);
   }
 
@@ -994,7 +938,7 @@ function indexSearch(query, limit = 15) {
       .slice(0, 8)
       .map(t => `"${esc(t)}"*`);
     if (extraTokens.length > 0) {
-      const expandedResults = ftsRaw([...ftsTokens, ...extraTokens].join(' OR '), safeLimit, query);
+      const expandedResults = ftsRaw([...ftsTokens, ...extraTokens].join(' OR '), safeLimit, query, maxLimit);
       results = mergeResults(results, expandedResults);
     }
   }
@@ -1127,6 +1071,11 @@ function commonRowFilters(row, args) {
   const agentFilter = resolveAgentFilter(args);
   if (agentFilter && rowAgent(row) !== agentFilter) return false;
 
+  if (args.project) {
+    let metadata = row.metadata || {};
+    if (typeof metadata === 'string') { try {metadata=JSON.parse(metadata);} catch {metadata={};} }
+    if (metadata.project !== args.project && metadata.project_id !== args.project) return false;
+  }
   const after = parseDateFilter(args.after_date);
   if (after && new Date(row.modified || 0) < after) return false;
 
@@ -1206,6 +1155,10 @@ function filterNoteResults(results, args) {
   const category = cleanInline(args.category || '', '');
   const after = parseDateFilter(args.after_date);
   return results.filter(row => {
+    if (args.project || (args.tags && args.tags.length)) {
+      const page = sqliteRows(`SELECT path,metadata,tags,modified FROM pages WHERE path='${escSql(row.path)}' LIMIT 1;`)[0];
+      if (!page || !commonRowFilters({...row,...page},args)) return false;
+    }
     if (agentFilter) {
       // Enrich from index when search result lacks metadata
       let agent = rowAgent(row);
@@ -1347,7 +1300,7 @@ function resolveVaultReadPath(requestedPath) {
 
 // ─── Tool Handlers ──────────────────────────────────────────────────────────
 
-function handleVaultRecall(args) {
+async function handleVaultRecall(args) {
   refreshVaultIndex();
   const query = args.query || '';
   const maxTokens = clampInteger(args.max_tokens, 2000, 200, 12000);
@@ -1362,6 +1315,16 @@ function handleVaultRecall(args) {
     usedTokens += cost;
   }
 
+  if (query && (retrievalFlags.rrf || retrievalFlags.authority || retrievalFlags.mode !== 'hash' || retrievalFlags.abstention)) {
+    const packed = await collectSearchResults({...args,limit:14});
+    for (const r of packed.items) {
+      const content = r.summary || r.snippet || ''; const cost = Math.ceil(content.length/4);
+      if (usedTokens+cost > maxTokens) break;
+      sections.push({title:r.title,path:r.path,category:r.category,content,score:r.score});usedTokens+=cost;
+    }
+    const fallback = packed.retrieval?.fallback ? '\nRetrieval fallback: lexical (model_unavailable)' : '';
+    return text(`[Alexandria Recall] ${sections.length} seções | ~${usedTokens} tokens\n\n` + sections.map(r=>`## ${r.title}\n${r.content}`).join('\n\n') + fallback);
+  }
   // 2. FTS matches
   if (query) {
     const ftsResults = indexSearch(query, 8);
@@ -1589,7 +1552,7 @@ function buildGraphContextFromSource(args) {
   return text(`# Alexandria Graph Context\nSource: ${source} | Sections: ${trimmed.length} | depth=${depth}\n\n${trimmed.join('\n\n---\n\n')}`);
 }
 
-function handleVaultContext(args) {
+async function handleVaultContext(args) {
   refreshVaultIndex();
   if (args.source) return buildGraphContextFromSource(args);
 
@@ -1599,11 +1562,15 @@ function handleVaultContext(args) {
 
   if (!query.trim()) return errorText('Query obrigatória.');
 
-  let results = hybridSearch(query, limit * 2);
+  const packed = (retrievalFlags.rrf || retrievalFlags.authority || retrievalFlags.mode !== 'hash' || retrievalFlags.abstention)
+    ? await collectSearchResults({...args,limit:Math.min(50,limit*2)})
+    : { items: hybridSearch(query, limit * 2) };
+  const fallback = packed.retrieval?.fallback ? `\n\nRetrieval fallback: lexical (${packed.retrieval.fallback})` : '';
+  let results = packed.items;
   results = applyRecencyBoost(results, query);
   results = results.slice(0, limit);
 
-  if (results.length === 0) return text(`Sem contexto relevante para "${query}".`);
+  if (results.length === 0) return text(`Sem contexto relevante para "${query}".` + fallback);
 
   // Build context package with full content and token budget
   let tokenBudget = maxTokens;
@@ -1637,7 +1604,7 @@ function handleVaultContext(args) {
     tokenBudget -= cost;
   }
 
-  return text(`# Alexandria Context\nQuery: "${query}" | Sections: ${sections.length} | Budget: ~${maxTokens - tokenBudget}/${maxTokens} tokens\n\n${sections.join('\n\n---\n\n')}`);
+  return text(`# Alexandria Context\nQuery: "${query}" | Sections: ${sections.length} | Budget: ~${maxTokens - tokenBudget}/${maxTokens} tokens\n\n${sections.join('\n\n---\n\n')}` + fallback);
 }
 
 const CAPTURE_KINDS = new Set(['fact', 'decision', 'procedure', 'gotcha']);
@@ -1707,6 +1674,7 @@ function handleVaultWrite(args) {
   const summary = body.slice(0, 300).replace(/\n/g, ' ');
   const parsed = parseSemanticMarkdown(fullContent, relPath, filePath);
   applyEffectivePermalink(parsed, relPath);
+  getStore().transaction(() => {
   upsertPageIndex({
     relPath,
     title: safeTitle,
@@ -1722,6 +1690,9 @@ function handleVaultWrite(args) {
     size: Buffer.byteLength(fullContent, 'utf8'),
   });
   indexStructuredItems({ relPath, parsed, modified: now });
+  });
+  if (trainedEmbedder) trainedEmbedder.invalidate(relPath);
+  indexSync?.markDirty(relPath);
 
   // Update local embedding
   LOCAL_EMBEDDING_STORE.set(relPath, createLocalEmbedding([safeTitle, cat, summary].join(' ')));
@@ -1775,6 +1746,7 @@ function handleVaultAutoSave(args) {
   const relPath = vaultRelativePath('sessions', `${slug}.md`);
   const parsed = parseSemanticMarkdown(content, relPath, filePath);
   applyEffectivePermalink(parsed, relPath);
+  getStore().transaction(() => {
   upsertPageIndex({
     relPath,
     title: safeTitle,
@@ -1790,6 +1762,9 @@ function handleVaultAutoSave(args) {
     size: Buffer.byteLength(content, 'utf8'),
   });
   indexStructuredItems({ relPath, parsed, modified: now.toISOString() });
+  });
+  if (trainedEmbedder) trainedEmbedder.invalidate(relPath);
+  indexSync?.markDirty(relPath);
 
   // Update hot.md with latest session
   updateHotContext(safeTitle, dateStr, safeLinks);
@@ -1824,6 +1799,7 @@ function updateHotContext(title, dateStr, links) {
 
     fs.writeFileSync(hotPath, hot);
   } catch {}
+  indexSync?.markDirty('hot.md');
 }
 
 function handleVaultStats() {
@@ -1845,6 +1821,7 @@ function handleVaultStats() {
     `- Local embeddings: ${localEmbs}`,
     `- Expansion cache: ${EXPANSION_CACHE.size} entries`,
     `- Index failures: ${INDEX_FAILURES.size}`,
+    `- Retrieval mode: ${retrievalState.mode}${retrievalState.fallback ? ' (lexical fallback: ' + retrievalState.fallback + ')' : ''}`,
     `- Hot context: ${hotLines} items`,
     '',
     '## Categories',
@@ -1934,6 +1911,9 @@ const TOOLS = [
         tags: { type: 'array', items: { type: 'string' }, description: 'Require all tags' },
         after_date: { type: 'string', description: 'Only results modified after this ISO date' },
         search_type: { type: 'string', enum: ['fts', 'local_semantic', 'hybrid'], description: 'Search mode for note results (default: hybrid)' },
+        explain: {type:'boolean',description:'Return ranking stream evidence (not logged)'},
+        project: {type:'string',description:'Filter frontmatter project or project_id'},
+        query_intent: {type:'string',enum:['current','historical','neutral']},
         include_snippets: { type: 'boolean', description: 'Include matched_text snippets in formatted results (default true)' },
       },
       required: ['query'],
@@ -2057,19 +2037,9 @@ function handleRequest(request) {
       return { tools: TOOLS };
 
     case 'tools/call': {
-      const { name, arguments: args } = params || {};
-      switch (name) {
-        case 'vault_recall': return handleVaultRecall(args || {});
-        case 'vault_search': return handleVaultSearch(args || {});
-        case 'vault_read': return handleVaultRead(args || {});
-        case 'vault_context': return handleVaultContext(args || {});
-        case 'vault_write': return handleVaultWrite(args || {});
-        case 'vault_auto_save': return handleVaultAutoSave(args || {});
-        case 'vault_list': return handleVaultList(args || {});
-        case 'vault_recent_activity': return handleVaultRecentActivity(args || {});
-        case 'vault_stats': return handleVaultStats();
-        default: return errorText(`Tool desconhecida: ${name}`);
-      }
+      const {name, arguments: args} = params || {};
+      if ((name === 'vault_write' && (!args?.title || !args?.content)) || (name === 'vault_auto_save' && (!args?.title || !args?.summary))) return errorText('Required fields missing.');
+      return dispatchAsync(name, args || {});
     }
 
     default:
@@ -2077,7 +2047,7 @@ function handleRequest(request) {
   }
 }
 
-function collectSearchResults(args) {
+async function collectSearchResults(args) {
   refreshVaultIndex();
   const query = args.query || '';
   const limit = clampInteger(args.limit, 10, 1, 50);
@@ -2085,6 +2055,19 @@ function collectSearchResults(args) {
 
   const entityType = cleanInline(args.entity_type || 'note', 'note').toLowerCase();
   let results = [];
+  const usePipeline = retrievalFlags.rrf || retrievalFlags.authority || retrievalFlags.mode !== 'hash' || retrievalFlags.abstention || args.project || (args.tags && args.tags.length);
+  if (['note','all'].includes(entityType) && usePipeline) {
+    const result = await getRetrievalPipeline().search({...args,limit:entityType==='all'?50:limit});
+    retrievalState = result.retrieval;
+    if (entityType === 'all') {
+      // Structured rows retain their established scores/contracts; note retrieval
+      // uses the selected mode and scope instead of silently reverting to hash.
+      result.items = [...result.items,...searchObservationRows(query,args,limit),...searchRelationRows(query,args,limit)]
+        .sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,limit);
+      result.retrieval = {...result.retrieval,scope:'notes'};
+    }
+    return result;
+  }
   if (entityType === 'observation') {
     results = searchObservationRows(query, args, limit);
   } else if (entityType === 'relation') {
@@ -2121,18 +2104,30 @@ function collectSearchResults(args) {
     }
     results = filterNoteResults(applyRecencyBoost(results, query), args).slice(0, limit);
   }
+  if (args.explain) {
+    // Explain annotates the existing engine output, including its recency boost.
+    // Switching engines here would change rankings just to show diagnostics.
+    results = results.map((r,i)=>({...r,evidence:[{stream:'legacy',rank:i+1,rawScore:r.score,contribution:r.score}]}));
+    return {query,items:results,retrieval:{mode:'hash',engine:'legacy',fallback:null,
+      configIdentity:crypto.createHash('sha256').update(getRetrievalPipeline().configIdentity+':legacy:'+entityType+':'+(args.search_type||'hybrid')).digest('hex'),
+      scoreMeaning:'legacy score including recency adjustment'}};
+  }
   return { query, items: results };
 }
 
-function handleVaultSearch(args) {
-  const packed = collectSearchResults(args);
+async function handleVaultSearch(args) {
+  const packed = await collectSearchResults(args);
   if (packed.error) return errorText(packed.error);
   if (packed.items.length === 0) {
-    return text(`Nenhum resultado para "${packed.query}". Tente remover filtros, ampliar category/tags/agent, trocar entity_type/search_type, usar vault_list para navegar categorias, ou consultar vault_recent_activity.`);
+    const fallback = packed.retrieval?.fallback ? `\n\nRetrieval fallback: lexical (${packed.retrieval.fallback})` : '';
+    const explanation = args.explain ? `\n\nRanking evidence: ${JSON.stringify({retrieval:packed.retrieval||{mode:'hash'},items:[]})}` : '';
+    return text(`Nenhum resultado para "${packed.query}". Tente remover filtros, ampliar category/tags/agent, trocar entity_type/search_type, usar vault_list para navegar categorias, ou consultar vault_recent_activity.`+fallback+explanation);
   }
   const includeSnippets = args.include_snippets !== false;
   const lines = packed.items.map((result, index) => formatSearchResult(result, index, includeSnippets));
-  return text(lines.join('\n\n'));
+  const fallback = packed.retrieval?.fallback ? `\n\nRetrieval fallback: lexical (${packed.retrieval.fallback})` : '';
+  const explanation = args.explain ? `\n\nRanking evidence: ${JSON.stringify({retrieval:packed.retrieval || {mode:'hash'},items:packed.items.map(r=>({path:r.path,evidence:r.evidence || []}))})}` : '';
+  return text(lines.join('\n\n') + fallback + explanation);
 }
 
 function upsertFrontmatterField(markdown, key, value) {
@@ -2400,24 +2395,34 @@ function mcpText(result) {
   return result?.content?.[0]?.text || '';
 }
 
-function ensureReady() {
-  ensureVaultReady();
-  loadEmbeddings();
-  loadExpansionCache();
+function ensureReady() { /* Discovery never touches vault, database or model. */ }
+async function dispatchAsync(name, args = {}) {
+  await ensureDataReady(); const result = await dispatch(name, args);
+  try { await indexSync.flush(); } catch (error) {
+    recordIndexFailure('',error);
+    if (['vault_write','vault_auto_save'].includes(name) && !result?.isError) return errorText('Escrita persistida, mas a sincronização do índice ficou pendente. Confira vault_stats antes de repetir a escrita.\n'+mcpText(result));
+  }
+  return result;
 }
+const withData = fn => async (...args) => { await ensureDataReady(); return fn(...args); };
 
 module.exports = {
-  dispatch,
+  dispatch: dispatchAsync,
   ensureReady,
+  ensureDataReady,
+  reconcileIndex,
+  getStore,
+  getRetrievalState: () => ({...retrievalState}),
+  close,
   handleRequest,
   TOOLS,
   mcpText,
-  collectSearchResults,
-  collectVaultHealth,
-  collectGraphNeighbors,
-  findInboxNote,
+  collectSearchResults: withData(collectSearchResults),
+  collectVaultHealth: withData(collectVaultHealth),
+  collectGraphNeighbors: withData(collectGraphNeighbors),
+  findInboxNote: withData(findInboxNote),
   inboxBodyFromMarkdown,
-  markInboxPromoted,
+  markInboxPromoted: withData(markInboxPromoted),
   normalizeCaptureKind,
   CAPTURE_KINDS,
   getVaultDir: () => VAULT_DIR,
