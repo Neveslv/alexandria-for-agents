@@ -4,8 +4,8 @@
   "frozen_before_candidate_measurements": true,
   "corpus": "corpus.json",
   "sha256": {
-    "corpus.json": "10822e289ce3d3b659111432fb3743bfa46244053a72f04b2051fbe74a4f358a",
-    "queries.json": "9fa11957ac74157d75066af256cba7b49f986e4e630cf184a6c8aca585ed4165"
+    "corpus.json": "4260944501f9a9878e31f9d1a9a3dc41653594c28a5798e817bab0d860bbda34",
+    "queries.json": "ff058811517da72cd70f01220d4227348d917e635a6ecb937b0803368ace703d"
   },
   "provenance": "Independent synthetic Codex fixtures frozen 2026-10-12; no model outputs consulted",
   "calibration_allowed": false

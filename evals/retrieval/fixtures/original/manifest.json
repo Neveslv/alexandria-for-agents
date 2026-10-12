@@ -4,17 +4,17 @@
   "frozen_before_candidate_measurements": true,
   "corpus": "corpus-600.json",
   "sha256": {
-    "baselines/results-ai-lexical-120.json": "9b746e660960f35bf84ad5e97259478e436c1e2ec93235c3b9e652ee028a6d44",
-    "baselines/results-ai-lexical-600.json": "9fa6b3ff01b6d54cba7559546e4f395eac458e10b4c2e5f1f62c00760bee514d",
-    "baselines/results-ai-local-120.json": "8c1de2420b1636926ab51b3da77ffe8711985772046fa6802276d78a364ac640",
-    "baselines/results-ai-local-600.json": "15615fa9a61dc74bef3c0fbe422edc052527f7a9b7f93918bc90d9191601d92d",
-    "baselines/results-installed-120.json": "c899a1cd317e5045a1daf875f068c8afc6ba4b098ec519629f00ea10bc324a38",
-    "baselines/results-installed-600.json": "b9cb70726a0a0768cc4ea56980b98b46ab1d7f6d1993345804d1c9b26d6b69f4",
-    "baselines/results-published-120.json": "681489314167428b6009e038f526e849e94207623bf685b5604972636abe2cd6",
-    "corpus-120.json": "0497de73c1bf05a80ccf43fbba6e9b37fe2b801f7f2453e0aff0806421ab1f06",
-    "corpus-600.json": "91571f1f6737619b018546aec55107833aa196cf149adf82a968c47c23f46240",
-    "queries.json": "65271290a49337f51a59f0f1927fbbb996a89eaddd49506de0b32bb2a915b99b",
-    "source-manifest.json": "33c835d7b09224bf201afef82c7d10610298f9169c26f2b890994b2c642242b3"
+    "baselines/results-ai-lexical-120.json": "062f54a9f4f6b80c85fef0f1f2f36409af094c29eb720f2d87a633cf110e2504",
+    "baselines/results-ai-lexical-600.json": "58f4b4b851188ce287b2d7376732e496b4882cbaf2baa233fb6791dd16a48b6b",
+    "baselines/results-ai-local-120.json": "e3d529d81384788bf92e8c6633099d613176c2b4bace533a73efd0ca8174e928",
+    "baselines/results-ai-local-600.json": "fa00236023dd32880ed72a4ebb76b8f9323f83d6217df99cdf2b052f5cce8577",
+    "baselines/results-installed-120.json": "438940371fd680cced10074333b81a3af5fad96d3fd0c1811f0e19f94c21b517",
+    "baselines/results-installed-600.json": "4be7861ae720dfb6ccf7dd40689f94a47b1b68c0c05f1f47669acc18ae7ac625",
+    "baselines/results-published-120.json": "40f2cd42f57aed30642e378810687629d11f727f0b382705de1dddd2d32242fa",
+    "corpus-120.json": "9a200622b10e825f58f14e13d484a3f21558bf340992a8c068ce839f1081c785",
+    "corpus-600.json": "3c8cbdeb95ef7262d21cd74b301826bba8a1bbd8e21f6d4a003ec4f033eb5625",
+    "queries.json": "c6bcbdbe9a7c982368bb57a4c747a5bc1cc108a9ee718e9a8661e3d2c31eb997",
+    "source-manifest.json": "49dc70f96f53df3cc8975a9e5e55e43881006423608caa41dfeb4d03f7f91ba2"
   },
   "provenance": "Original synthetic Codex benchmark 2026-10-11",
   "calibration_allowed": false

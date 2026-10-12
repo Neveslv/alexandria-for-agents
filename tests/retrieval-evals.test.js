@@ -26,6 +26,10 @@ test('frozen fixtures validate and seven preserved baselines reproduce',()=>{
  const r=py("import sys,json;from pathlib import Path;sys.path.insert(0,'evals/retrieval');from benchmark import load_dataset;from report import verify_preserved;[load_dataset(Path('evals/retrieval/fixtures')/n) for n in ['original','development','holdout']];print(json.dumps(verify_preserved(Path('evals/retrieval/fixtures/original'))))");
  assert.equal(r.files,7);assert.ok(r.max_delta<1e-12);
 });
+test('frozen fixture hashes are stable across CRLF and LF checkouts',()=>{
+ const r=py("import sys,json,tempfile;from pathlib import Path;sys.path.insert(0,'evals/retrieval');from benchmark import digest\nwith tempfile.TemporaryDirectory() as d:\n p=Path(d)/'lf.json';q=Path(d)/'crlf.json';p.write_bytes(b'{\\n  \\\"fixture\\\": true\\n}\\n');q.write_bytes(p.read_bytes().replace(b'\\n',b'\\r\\n'))\n print(json.dumps(digest(p)==digest(q)))");
+ assert.equal(r,true);
+});
 test('dataset mutation is rejected before server launch',()=>{
  const r=py("import sys,json,tempfile,shutil;from pathlib import Path;sys.path.insert(0,'evals/retrieval');from benchmark import load_dataset;ok=False\nwith tempfile.TemporaryDirectory() as tmp:\n d=Path(tmp)/'data';shutil.copytree('evals/retrieval/fixtures/holdout',d);(d/'queries.json').write_text('[]')\n try:load_dataset(d)\n except ValueError:ok=True\nprint(json.dumps(ok))");
  assert.equal(r,true);

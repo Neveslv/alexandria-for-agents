@@ -15,7 +15,10 @@ from mcp_client import MCP, RequestTimeout
 from score import extract_paths, normalize, score, summarize
 
 def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    # Git checkouts can translate JSON fixtures between CRLF and LF by OS.
+    # Hash the canonical LF representation so frozen datasets verify on both.
+    content = Path(path).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(content).hexdigest()
 
 def load_dataset(directory, corpus_name=None):
     directory = Path(directory)
