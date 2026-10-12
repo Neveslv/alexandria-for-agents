@@ -1,0 +1,1456 @@
+{
+  "summary": {
+    "system": "published",
+    "notes": 120,
+    "handshake_ms": 15069.644700000936,
+    "tool_count": 9,
+    "cold_first_query_ms": 695.5453999980818,
+    "cold_first_paths": [
+      "concepts/wal.md",
+      "concepts/mcp.md",
+      "sessions/distractor-0000.md",
+      "sessions/distractor-0012.md",
+      "sessions/distractor-0024.md"
+    ],
+    "latency": {
+      "median_ms": 554.8477500014997,
+      "p95_ms": 843.9021999947727,
+      "min_ms": 271.6096000003745,
+      "max_ms": 949.8359999997774,
+      "requests": 44
+    },
+    "quality": {
+      "all_positive": {
+        "queries": 40,
+        "hit_at_5": 0.875,
+        "mrr_at_5": 0.76125,
+        "ndcg_at_5": 0.7880707168971217,
+        "recall_at_5": 0.875
+      },
+      "lexical": {
+        "queries": 12,
+        "hit_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0,
+        "recall_at_5": 1.0
+      },
+      "paraphrase": {
+        "queries": 12,
+        "hit_at_5": 1.0,
+        "mrr_at_5": 0.8541666666666666,
+        "ndcg_at_5": 0.891044672101359,
+        "recall_at_5": 1.0
+      },
+      "cross_language": {
+        "queries": 12,
+        "hit_at_5": 0.5833333333333334,
+        "mrr_at_5": 0.35,
+        "ndcg_at_5": 0.409214318460031,
+        "recall_at_5": 0.5833333333333334
+      },
+      "multi_note": {
+        "queries": 4,
+        "hit_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 0.9799301972870469,
+        "recall_at_5": 1.0
+      },
+      "absent": {
+        "queries": 4,
+        "correct_abstention": 0.0
+      }
+    },
+    "scoring_version": "header-only-v2"
+  },
+  "rows": [
+    {
+      "id": "oauth-paraphrase",
+      "group": "paraphrase",
+      "query": "Por que o login Google bloqueia uma conta durante teste do aplicativo?",
+      "relevant": [
+        "concepts/oauth.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 949.8359999997774,
+      "paths": [
+        "concepts/oauth.md",
+        "concepts/wal.md",
+        "concepts/ttl.md",
+        "sessions/distractor-0006.md",
+        "sessions/distractor-0018.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 18.049_\n\n2. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.082_\n\n3. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.049_\n\n4. **replay status meeting 0** [note:sessions] — `sessions/distractor-0006.md`\n   ---\ntitle: \"replay status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"replay\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# replay status meeting 0\n\nThe team reviewed the replay dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-0`\n   permalink: `replay-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.029_\n\n5. **replay status meeting 1** [note:sessions] — `sessions/distractor-0018.md`\n   ---\ntitle: \"replay status meeting 1\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"replay\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# replay status meeting 1\n\nThe team reviewed the replay dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-1`\n   permalink: `replay-status-meeting-1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.029_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/oauth.md",
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/ttl.md",
+        "sessions/distractor-0006.md"
+      ]
+    },
+    {
+      "id": "backup-cross_language",
+      "group": "cross_language",
+      "query": "What proves that a database backup can actually be recovered?",
+      "relevant": [
+        "concepts/backup.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 948.1401000011829,
+      "paths": [
+        "concepts/idempotency.md",
+        "concepts/backup.md",
+        "sessions/distractor-0005.md",
+        "sessions/distractor-0017.md",
+        "sessions/distractor-0029.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n2. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.879_\n\n3. **backup status meeting 0** [note:sessions] — `sessions/distractor-0005.md`\n   # backup status meeting 0 The team reviewed the backup dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-0`\n   permalink: `backup-status-meeting-0`\n   heading: `backup status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **backup status meeting 1** [note:sessions] — `sessions/distractor-0017.md`\n   # backup status meeting 1 The team reviewed the backup dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-1`\n   permalink: `backup-status-meeting-1`\n   heading: `backup status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **backup status meeting 2** [note:sessions] — `sessions/distractor-0029.md`\n   # backup status meeting 2 The team reviewed the backup dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-2`\n   permalink: `backup-status-meeting-2`\n   heading: `backup status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/idempotency.md",
+        "concepts/backup.md",
+        "sessions/distractor-0005.md",
+        "sessions/distractor-0017.md",
+        "sessions/distractor-0029.md"
+      ]
+    },
+    {
+      "id": "stock-lexical",
+      "group": "lexical",
+      "query": "FEFO lote vencimento",
+      "relevant": [
+        "concepts/stock.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 515.8945999937714,
+      "paths": [
+        "concepts/stock.md",
+        "sessions/distractor-0002.md",
+        "sessions/distractor-0014.md",
+        "sessions/distractor-0026.md",
+        "sessions/distractor-0038.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Estoque por lote FEFO** [note:concepts] — `concepts/stock.md`\n   # Estoque por lote FEFO O estoque de medicamentos deve consumir primeiro o lote com vencimento mais proximo, estrategia FEFO. FIFO considera entrada e nao necessariamente validade.\n   source: `memory://estoque-por-lote-fefo`\n   permalink: `estoque-por-lote-fefo`\n   heading: `Estoque por lote FEFO`\n   _modified: 2026-10-01T00:00:00.000Z | score: 18.399_\n\n2. **FEFO status meeting 0** [note:sessions] — `sessions/distractor-0002.md`\n   # FEFO status meeting 0 The team reviewed the FEFO dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-0`\n   permalink: `fefo-status-meeting-0`\n   heading: `FEFO status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **FEFO status meeting 1** [note:sessions] — `sessions/distractor-0014.md`\n   # FEFO status meeting 1 The team reviewed the FEFO dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-1`\n   permalink: `fefo-status-meeting-1`\n   heading: `FEFO status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **FEFO status meeting 2** [note:sessions] — `sessions/distractor-0026.md`\n   # FEFO status meeting 2 The team reviewed the FEFO dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-2`\n   permalink: `fefo-status-meeting-2`\n   heading: `FEFO status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **FEFO status meeting 3** [note:sessions] — `sessions/distractor-0038.md`\n   # FEFO status meeting 3 The team reviewed the FEFO dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-3`\n   permalink: `fefo-status-meeting-3`\n   heading: `FEFO status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/stock.md",
+        "sessions/distractor-0002.md",
+        "sessions/distractor-0014.md",
+        "sessions/distractor-0026.md",
+        "sessions/distractor-0038.md"
+      ]
+    },
+    {
+      "id": "pagination-paraphrase",
+      "group": "paraphrase",
+      "query": "Como navegar registros sem duplicatas enquanto entram novos dados?",
+      "relevant": [
+        "concepts/pagination.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 287.52220000023954,
+      "paths": [
+        "concepts/pagination.md",
+        "concepts/secrets.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.218_\n\n2. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   ---\ntitle: \"Secrets redaction before capture\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"secrets\", \"redaction\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Secrets redaction before capture\n\nRedact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.817_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/pagination.md",
+        "concepts/secrets.md"
+      ]
+    },
+    {
+      "id": "absent-3",
+      "group": "absent",
+      "query": "orbital mechanics Jupiter moons",
+      "relevant": [],
+      "repeat": 0,
+      "latency_ms": 292.5055000014254,
+      "paths": [
+        "concepts/replay.md",
+        "concepts/pagination.md"
+      ],
+      "metrics": {
+        "correct_abstention": 0.0
+      },
+      "raw": {
+        "text": "1. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   ---\ntitle: \"Battle replay persisted attempts\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"replay\", \"battle\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Battle replay persisted attempts\n\nBattle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after t\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.601_\n\n2. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   ---\ntitle: \"Paginacao cursor ordenacao\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"pagination\", \"cursor\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Paginacao cursor ordenacao\n\nPaginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/replay.md",
+        "concepts/pagination.md"
+      ]
+    },
+    {
+      "id": "oauth-cross_language",
+      "group": "cross_language",
+      "query": "Google consent refuses an account while the application is in testing mode",
+      "relevant": [
+        "concepts/oauth.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 722.5299999990966,
+      "paths": [
+        "concepts/oauth.md",
+        "concepts/backup.md",
+        "concepts/secrets.md",
+        "concepts/outbox.md",
+        "sessions/distractor-0009.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 11.811_\n\n2. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.233_\n\n3. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.176_\n\n4. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.135_\n\n5. **GitHub status meeting 0** [note:sessions] — `sessions/distractor-0009.md`\n   # GitHub status meeting 0 The team reviewed the GitHub dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-0`\n   permalink: `github-status-meeting-0`\n   heading: `GitHub status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.802_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/oauth.md",
+        "concepts/backup.md",
+        "concepts/secrets.md",
+        "concepts/outbox.md",
+        "sessions/distractor-0009.md"
+      ]
+    },
+    {
+      "id": "ttl-paraphrase",
+      "group": "paraphrase",
+      "query": "How should cached answers react when their source file changes?",
+      "relevant": [
+        "concepts/ttl.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 760.1513999979943,
+      "paths": [
+        "concepts/ttl.md",
+        "concepts/secrets.md",
+        "sessions/distractor-0007.md",
+        "sessions/distractor-0019.md",
+        "sessions/distractor-0031.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 20.799_\n\n2. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.585_\n\n3. **pagination status meeting 0** [note:sessions] — `sessions/distractor-0007.md`\n   ---\ntitle: \"pagination status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"pagination\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# pagination status meeting 0\n\nThe team reviewed the pagination dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://pagination-status-meeting-0`\n   permalink: `pagination-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.512_\n\n4. **pagination status meeting 1** [note:sessions] — `sessions/distractor-0019.md`\n   ---\ntitle: \"pagination status meeting 1\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"pagination\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# pagination status meeting 1\n\nThe team reviewed the pagination dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://pagination-status-meeting-1`\n   permalink: `pagination-status-meeting-1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.512_\n\n5. **pagination status meeting 2** [note:sessions] — `sessions/distractor-0031.md`\n   ---\ntitle: \"pagination status meeting 2\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"pagination\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# pagination status meeting 2\n\nThe team reviewed the pagination dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://pagination-status-meeting-2`\n   permalink: `pagination-status-meeting-2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.512_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/ttl.md",
+        "concepts/secrets.md",
+        "sessions/distractor-0007.md",
+        "sessions/distractor-0019.md",
+        "sessions/distractor-0031.md"
+      ]
+    },
+    {
+      "id": "stock-paraphrase",
+      "group": "paraphrase",
+      "query": "Qual caixa de remedio devemos retirar primeiro para evitar expiracao?",
+      "relevant": [
+        "concepts/stock.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 334.62210000288906,
+      "paths": [
+        "concepts/mcp.md",
+        "concepts/outbox.md",
+        "concepts/backup.md",
+        "concepts/stock.md",
+        "concepts/oauth.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.25,
+        "ndcg_at_5": 0.43067655807339306
+      },
+      "raw": {
+        "text": "1. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   ---\ntitle: \"MCP startup lazy indexing\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"MCP\", \"indexing\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# MCP startup lazy indexing\n\nMCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection.\n\nRelated: [[concept\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.730_\n\n2. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_\n\n3. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_\n\n4. **Estoque por lote FEFO** [note:concepts] — `concepts/stock.md`\n   # Estoque por lote FEFO O estoque de medicamentos deve consumir primeiro o lote com vencimento mais proximo, estrategia FEFO. FIFO considera entrada e nao necessariamente validade.\n   source: `memory://estoque-por-lote-fefo`\n   permalink: `estoque-por-lote-fefo`\n   heading: `Estoque por lote FEFO`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_\n\n5. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/mcp.md",
+        "concepts/outbox.md",
+        "concepts/backup.md",
+        "concepts/stock.md",
+        "concepts/oauth.md"
+      ]
+    },
+    {
+      "id": "rules-cross_language",
+      "group": "cross_language",
+      "query": "Como receber contribuicoes externas sem liberar escrita na branch principal?",
+      "relevant": [
+        "concepts/rules.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 410.76049999537645,
+      "paths": [
+        "concepts/wal.md",
+        "concepts/rules.md",
+        "concepts/oauth.md",
+        "concepts/stock.md",
+        "concepts/backup.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 9.163_\n\n2. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   # Protected branch contribution External contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eligible reviewer.\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   heading: `Protected branch contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.878_\n\n3. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.009_\n\n4. **Estoque por lote FEFO** [note:concepts] — `concepts/stock.md`\n   # Estoque por lote FEFO O estoque de medicamentos deve consumir primeiro o lote com vencimento mais proximo, estrategia FEFO. FIFO considera entrada e nao necessariamente validade.\n   source: `memory://estoque-por-lote-fefo`\n   permalink: `estoque-por-lote-fefo`\n   heading: `Estoque por lote FEFO`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.204_\n\n5. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   ---\ntitle: \"Backup recuperavel\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"backup\", \"restore\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Backup recuperavel\n\nBackup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.861_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/rules.md",
+        "concepts/oauth.md",
+        "concepts/stock.md"
+      ]
+    },
+    {
+      "id": "replay-paraphrase",
+      "group": "paraphrase",
+      "query": "How should old battles remain accurate after character balancing changes?",
+      "relevant": [
+        "concepts/replay.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 545.1931999996305,
+      "paths": [
+        "concepts/replay.md",
+        "concepts/ttl.md",
+        "concepts/pagination.md",
+        "sessions/distractor-0002.md",
+        "sessions/distractor-0014.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   # Battle replay persisted attempts Battle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after the battle.\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   heading: `Battle replay persisted attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 15.295_\n\n2. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.049_\n\n3. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   ---\ntitle: \"Paginacao cursor ordenacao\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"pagination\", \"cursor\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Paginacao cursor ordenacao\n\nPaginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.971_\n\n4. **FEFO status meeting 0** [note:sessions] — `sessions/distractor-0002.md`\n   ---\ntitle: \"FEFO status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"FEFO\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# FEFO status meeting 0\n\nThe team reviewed the FEFO dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-0`\n   permalink: `fefo-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.873_\n\n5. **FEFO status meeting 1** [note:sessions] — `sessions/distractor-0014.md`\n   ---\ntitle: \"FEFO status meeting 1\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"FEFO\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# FEFO status meeting 1\n\nThe team reviewed the FEFO dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://fefo-status-meeting-1`\n   permalink: `fefo-status-meeting-1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.873_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/replay.md",
+        "concepts/ttl.md",
+        "concepts/pagination.md",
+        "sessions/distractor-0002.md",
+        "sessions/distractor-0014.md"
+      ]
+    },
+    {
+      "id": "outbox-lexical",
+      "group": "lexical",
+      "query": "transactional outbox consumers",
+      "relevant": [
+        "concepts/outbox.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 571.0744000025443,
+      "paths": [
+        "concepts/outbox.md",
+        "sessions/distractor-0004.md",
+        "sessions/distractor-0016.md",
+        "sessions/distractor-0028.md",
+        "sessions/distractor-0040.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 18.197_\n\n2. **outbox status meeting 0** [note:sessions] — `sessions/distractor-0004.md`\n   # outbox status meeting 0 The team reviewed the outbox dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-0`\n   permalink: `outbox-status-meeting-0`\n   heading: `outbox status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **outbox status meeting 1** [note:sessions] — `sessions/distractor-0016.md`\n   # outbox status meeting 1 The team reviewed the outbox dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-1`\n   permalink: `outbox-status-meeting-1`\n   heading: `outbox status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **outbox status meeting 2** [note:sessions] — `sessions/distractor-0028.md`\n   # outbox status meeting 2 The team reviewed the outbox dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-2`\n   permalink: `outbox-status-meeting-2`\n   heading: `outbox status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **outbox status meeting 3** [note:sessions] — `sessions/distractor-0040.md`\n   # outbox status meeting 3 The team reviewed the outbox dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-3`\n   permalink: `outbox-status-meeting-3`\n   heading: `outbox status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/outbox.md",
+        "sessions/distractor-0004.md",
+        "sessions/distractor-0016.md",
+        "sessions/distractor-0028.md",
+        "sessions/distractor-0040.md"
+      ]
+    },
+    {
+      "id": "secrets-paraphrase",
+      "group": "paraphrase",
+      "query": "At what stage should credentials be removed from agent memory?",
+      "relevant": [
+        "concepts/secrets.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 557.6436999981524,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/replay.md",
+        "concepts/outbox.md",
+        "concepts/backup.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 10.401_\n\n2. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   # Battle replay persisted attempts Battle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after the battle.\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   heading: `Battle replay persisted attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.297_\n\n3. **Projetos Ativos** [note:hot] — `hot.md`\n   # Projetos Ativos > Last updated: never\n   source: `memory://projetos-ativos`\n   permalink: `projetos-ativos`\n   heading: `Projetos Ativos`\n   _modified: 2026-10-11T03:25:17.464Z | score: 5.291_\n\n4. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.135_\n\n5. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.458_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/replay.md",
+        "concepts/outbox.md",
+        "concepts/backup.md"
+      ]
+    },
+    {
+      "id": "rules-paraphrase",
+      "group": "paraphrase",
+      "query": "How can outside contributors help without writing directly to main?",
+      "relevant": [
+        "concepts/rules.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 342.5779000026523,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/rules.md",
+        "concepts/idempotency.md",
+        "concepts/mcp.md",
+        "concepts/pagination.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 10.312_\n\n2. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   # Protected branch contribution External contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eligible reviewer.\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   heading: `Protected branch contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n3. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.135_\n\n4. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.989_\n\n5. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   ---\ntitle: \"Paginacao cursor ordenacao\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"pagination\", \"cursor\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Paginacao cursor ordenacao\n\nPaginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.831_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/rules.md",
+        "concepts/idempotency.md",
+        "concepts/mcp.md",
+        "concepts/wal.md"
+      ]
+    },
+    {
+      "id": "ttl-cross_language",
+      "group": "cross_language",
+      "query": "Como invalidar respostas em cache quando a nota original muda?",
+      "relevant": [
+        "concepts/ttl.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 352.16760000184877,
+      "paths": [
+        "concepts/oauth.md",
+        "concepts/pagination.md",
+        "concepts/backup.md",
+        "concepts/wal.md",
+        "concepts/ttl.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.2,
+        "ndcg_at_5": 0.38685280723454163
+      },
+      "raw": {
+        "text": "1. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 8.478_\n\n2. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.601_\n\n3. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.233_\n\n4. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.081_\n\n5. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.821_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/oauth.md",
+        "concepts/pagination.md",
+        "concepts/backup.md",
+        "concepts/wal.md",
+        "concepts/mcp.md"
+      ]
+    },
+    {
+      "id": "storage",
+      "group": "multi_note",
+      "query": "SQLite memory startup and writer contention",
+      "relevant": [
+        "concepts/wal.md",
+        "concepts/mcp.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 609.0817000003881,
+      "paths": [
+        "concepts/mcp.md",
+        "concepts/secrets.md",
+        "concepts/wal.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 0.9197207891481876
+      },
+      "raw": {
+        "text": "1. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 8.283_\n\n2. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.201_\n\n3. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.668_\n\n4. **SQLite status meeting 0** [note:sessions] — `sessions/distractor-0000.md`\n   # SQLite status meeting 0 The team reviewed the SQLite dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-0`\n   permalink: `sqlite-status-meeting-0`\n   heading: `SQLite status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n5. **SQLite status meeting 1** [note:sessions] — `sessions/distractor-0012.md`\n   # SQLite status meeting 1 The team reviewed the SQLite dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-1`\n   permalink: `sqlite-status-meeting-1`\n   heading: `SQLite status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/mcp.md",
+        "concepts/wal.md",
+        "concepts/secrets.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md"
+      ]
+    },
+    {
+      "id": "secrets-cross_language",
+      "group": "cross_language",
+      "query": "Quando remover senhas e tokens antes de registrar memoria?",
+      "relevant": [
+        "concepts/secrets.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 379.29999999323627,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/pagination.md",
+        "concepts/oauth.md",
+        "concepts/idempotency.md",
+        "concepts/outbox.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.201_\n\n2. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.601_\n\n3. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.437_\n\n4. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   ---\ntitle: \"Idempotency payment retry\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"payment\", \"idempotency\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Idempotency payment retry\n\nPayment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.863_\n\n5. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/pagination.md",
+        "concepts/oauth.md",
+        "concepts/idempotency.md",
+        "concepts/outbox.md"
+      ]
+    },
+    {
+      "id": "rules-lexical",
+      "group": "lexical",
+      "query": "protected main pull requests",
+      "relevant": [
+        "concepts/rules.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 437.9853999998886,
+      "paths": [
+        "concepts/rules.md",
+        "concepts/idempotency.md",
+        "concepts/ttl.md",
+        "concepts/replay.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   # Protected branch contribution External contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eligible reviewer.\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   heading: `Protected branch contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 25.089_\n\n2. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   ---\ntitle: \"Idempotency payment retry\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"payment\", \"idempotency\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Idempotency payment retry\n\nPayment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.883_\n\n3. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   ---\ntitle: \"Cache TTL invalidation\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"cache\", \"TTL\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Cache TTL invalidation\n\nCache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.809_\n\n4. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   ---\ntitle: \"Battle replay persisted attempts\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"replay\", \"battle\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Battle replay persisted attempts\n\nBattle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after t\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.715_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/rules.md",
+        "concepts/idempotency.md",
+        "concepts/ttl.md",
+        "concepts/replay.md"
+      ]
+    },
+    {
+      "id": "stock-cross_language",
+      "group": "cross_language",
+      "query": "Which medicine batch should be consumed before its expiry date?",
+      "relevant": [
+        "concepts/stock.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 638.3533000043826,
+      "paths": [
+        "concepts/ttl.md",
+        "concepts/secrets.md",
+        "concepts/rules.md",
+        "concepts/mcp.md",
+        "concepts/pagination.md"
+      ],
+      "metrics": {
+        "hit_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr_at_5": 0,
+        "ndcg_at_5": 0.0
+      },
+      "raw": {
+        "text": "1. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 13.853_\n\n2. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.956_\n\n3. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   # Protected branch contribution External contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eligible reviewer.\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   heading: `Protected branch contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.830_\n\n4. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.695_\n\n5. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.961_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/ttl.md",
+        "concepts/secrets.md",
+        "concepts/rules.md",
+        "concepts/mcp.md",
+        "concepts/wal.md"
+      ]
+    },
+    {
+      "id": "idempotency-paraphrase",
+      "group": "paraphrase",
+      "query": "How do we stop a retry from charging a customer twice?",
+      "relevant": [
+        "concepts/idempotency.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 460.7624000054784,
+      "paths": [
+        "concepts/idempotency.md",
+        "concepts/ttl.md",
+        "concepts/wal.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.878_\n\n2. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.049_\n\n3. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   ---\ntitle: \"SQLite WAL concorrencia\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"SQLite\", \"WAL\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# SQLite WAL concorrencia\n\nSQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas.\n\nRelated: [[concepts/mcp.\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.002_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/idempotency.md",
+        "concepts/ttl.md",
+        "concepts/wal.md"
+      ]
+    },
+    {
+      "id": "idempotency-lexical",
+      "group": "lexical",
+      "query": "idempotency payment retries",
+      "relevant": [
+        "concepts/idempotency.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 684.6679000009317,
+      "paths": [
+        "concepts/idempotency.md",
+        "concepts/outbox.md",
+        "sessions/distractor-0003.md",
+        "sessions/distractor-0015.md",
+        "sessions/distractor-0027.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 17.738_\n\n2. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.540_\n\n3. **payment status meeting 0** [note:sessions] — `sessions/distractor-0003.md`\n   # payment status meeting 0 The team reviewed the payment dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://payment-status-meeting-0`\n   permalink: `payment-status-meeting-0`\n   heading: `payment status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **payment status meeting 1** [note:sessions] — `sessions/distractor-0015.md`\n   # payment status meeting 1 The team reviewed the payment dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://payment-status-meeting-1`\n   permalink: `payment-status-meeting-1`\n   heading: `payment status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **payment status meeting 2** [note:sessions] — `sessions/distractor-0027.md`\n   # payment status meeting 2 The team reviewed the payment dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://payment-status-meeting-2`\n   permalink: `payment-status-meeting-2`\n   heading: `payment status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/idempotency.md",
+        "concepts/outbox.md",
+        "sessions/distractor-0003.md",
+        "sessions/distractor-0015.md",
+        "sessions/distractor-0027.md"
+      ]
+    },
+    {
+      "id": "absent-2",
+      "group": "absent",
+      "query": "ZXQ_UNSEEN_918273",
+      "relevant": [],
+      "repeat": 0,
+      "latency_ms": 271.6096000003745,
+      "paths": [
+        "concepts/replay.md"
+      ],
+      "metrics": {
+        "correct_abstention": 0.0
+      },
+      "raw": {
+        "text": "1. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   ---\ntitle: \"Battle replay persisted attempts\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"replay\", \"battle\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Battle replay persisted attempts\n\nBattle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after t\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.752_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/replay.md"
+      ]
+    },
+    {
+      "id": "absent-0",
+      "group": "absent",
+      "query": "quantum entanglement superconducting qubits",
+      "relevant": [],
+      "repeat": 0,
+      "latency_ms": 433.71469999692636,
+      "paths": [
+        "concepts/rules.md",
+        "concepts/mcp.md"
+      ],
+      "metrics": {
+        "correct_abstention": 0.0
+      },
+      "raw": {
+        "text": "1. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   ---\ntitle: \"Protected branch contribution\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\", \"rulesets\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Protected branch contribution\n\nExternal contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eli\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 1.167_\n\n2. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   ---\ntitle: \"MCP startup lazy indexing\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"MCP\", \"indexing\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# MCP startup lazy indexing\n\nMCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection.\n\nRelated: [[concept\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.792_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/rules.md",
+        "concepts/mcp.md"
+      ]
+    },
+    {
+      "id": "oauth-lexical",
+      "group": "lexical",
+      "query": "OAuth access_denied test users",
+      "relevant": [
+        "concepts/oauth.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 816.564799999469,
+      "paths": [
+        "concepts/oauth.md",
+        "sessions/distractor-0001.md",
+        "sessions/distractor-0013.md",
+        "sessions/distractor-0025.md",
+        "sessions/distractor-0037.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 23.476_\n\n2. **OAuth status meeting 0** [note:sessions] — `sessions/distractor-0001.md`\n   # OAuth status meeting 0 The team reviewed the OAuth dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-0`\n   permalink: `oauth-status-meeting-0`\n   heading: `OAuth status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **OAuth status meeting 1** [note:sessions] — `sessions/distractor-0013.md`\n   # OAuth status meeting 1 The team reviewed the OAuth dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-1`\n   permalink: `oauth-status-meeting-1`\n   heading: `OAuth status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **OAuth status meeting 2** [note:sessions] — `sessions/distractor-0025.md`\n   # OAuth status meeting 2 The team reviewed the OAuth dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-2`\n   permalink: `oauth-status-meeting-2`\n   heading: `OAuth status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **OAuth status meeting 3** [note:sessions] — `sessions/distractor-0037.md`\n   # OAuth status meeting 3 The team reviewed the OAuth dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-3`\n   permalink: `oauth-status-meeting-3`\n   heading: `OAuth status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/oauth.md",
+        "sessions/distractor-0001.md",
+        "sessions/distractor-0013.md",
+        "sessions/distractor-0025.md",
+        "sessions/distractor-0037.md"
+      ]
+    },
+    {
+      "id": "mcp-cross_language",
+      "group": "cross_language",
+      "query": "Como evitar timeout no handshake enquanto o vault e indexado?",
+      "relevant": [
+        "concepts/mcp.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 458.39580000028946,
+      "paths": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/stock.md",
+        "concepts/backup.md",
+        "concepts/oauth.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.082_\n\n2. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.968_\n\n3. **Estoque por lote FEFO** [note:concepts] — `concepts/stock.md`\n   ---\ntitle: \"Estoque por lote FEFO\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"FEFO\", \"medicamentos\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Estoque por lote FEFO\n\nO estoque de medicamentos deve consumir primeiro o lote com vencimento mais proximo, estrategia FEFO. FIFO considera entrada e nao necessariamente validade.\n\n   source: `memory://estoque-por-lote-fefo`\n   permalink: `estoque-por-lote-fefo`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.889_\n\n4. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   ---\ntitle: \"Backup recuperavel\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"backup\", \"restore\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Backup recuperavel\n\nBackup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.703_\n\n5. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   ---\ntitle: \"OAuth Google acesso negado\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"OAuth\", \"Google\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# OAuth Google acesso negado\n\nGoogle OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/stock.md",
+        "concepts/backup.md",
+        "concepts/oauth.md"
+      ]
+    },
+    {
+      "id": "wal-cross_language",
+      "group": "cross_language",
+      "query": "How can SQLite readers continue while a writer updates the database?",
+      "relevant": [
+        "concepts/wal.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 424.7911999991629,
+      "paths": [
+        "concepts/idempotency.md",
+        "concepts/wal.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md",
+        "sessions/distractor-0024.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n2. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.668_\n\n3. **SQLite status meeting 0** [note:sessions] — `sessions/distractor-0000.md`\n   # SQLite status meeting 0 The team reviewed the SQLite dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-0`\n   permalink: `sqlite-status-meeting-0`\n   heading: `SQLite status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n4. **SQLite status meeting 1** [note:sessions] — `sessions/distractor-0012.md`\n   # SQLite status meeting 1 The team reviewed the SQLite dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-1`\n   permalink: `sqlite-status-meeting-1`\n   heading: `SQLite status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n5. **SQLite status meeting 2** [note:sessions] — `sessions/distractor-0024.md`\n   # SQLite status meeting 2 The team reviewed the SQLite dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-2`\n   permalink: `sqlite-status-meeting-2`\n   heading: `SQLite status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/idempotency.md",
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md"
+      ]
+    },
+    {
+      "id": "ttl-lexical",
+      "group": "lexical",
+      "query": "cache TTL invalidation",
+      "relevant": [
+        "concepts/ttl.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 671.1624000017764,
+      "paths": [
+        "concepts/ttl.md",
+        "sessions/distractor-0011.md",
+        "sessions/distractor-0023.md",
+        "sessions/distractor-0035.md",
+        "sessions/distractor-0047.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 19.655_\n\n2. **cache status meeting 0** [note:sessions] — `sessions/distractor-0011.md`\n   # cache status meeting 0 The team reviewed the cache dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-0`\n   permalink: `cache-status-meeting-0`\n   heading: `cache status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **cache status meeting 1** [note:sessions] — `sessions/distractor-0023.md`\n   # cache status meeting 1 The team reviewed the cache dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-1`\n   permalink: `cache-status-meeting-1`\n   heading: `cache status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **cache status meeting 2** [note:sessions] — `sessions/distractor-0035.md`\n   # cache status meeting 2 The team reviewed the cache dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-2`\n   permalink: `cache-status-meeting-2`\n   heading: `cache status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **cache status meeting 3** [note:sessions] — `sessions/distractor-0047.md`\n   # cache status meeting 3 The team reviewed the cache dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-3`\n   permalink: `cache-status-meeting-3`\n   heading: `cache status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/ttl.md",
+        "sessions/distractor-0011.md",
+        "sessions/distractor-0023.md",
+        "sessions/distractor-0035.md",
+        "sessions/distractor-0047.md"
+      ]
+    },
+    {
+      "id": "wal-paraphrase",
+      "group": "paraphrase",
+      "query": "Como evitar database locked com leitores e escritores simultaneos?",
+      "relevant": [
+        "concepts/wal.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 471.5883000026224,
+      "paths": [
+        "concepts/wal.md",
+        "concepts/idempotency.md",
+        "concepts/outbox.md",
+        "concepts/secrets.md",
+        "concepts/backup.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 15.245_\n\n2. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n3. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   ---\ntitle: \"Transactional outbox delivery\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"outbox\", \"events\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Transactional outbox delivery\n\nTransactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.895_\n\n4. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   ---\ntitle: \"Secrets redaction before capture\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"secrets\", \"redaction\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Secrets redaction before capture\n\nRedact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.800_\n\n5. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   ---\ntitle: \"Backup recuperavel\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"backup\", \"restore\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Backup recuperavel\n\nBackup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.798_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/idempotency.md",
+        "concepts/outbox.md",
+        "concepts/secrets.md"
+      ]
+    },
+    {
+      "id": "pagination-cross_language",
+      "group": "cross_language",
+      "query": "How do we avoid duplicate records when paging while inserts happen?",
+      "relevant": [
+        "concepts/pagination.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 660.6194999985746,
+      "paths": [
+        "concepts/ttl.md",
+        "concepts/idempotency.md",
+        "concepts/secrets.md",
+        "sessions/distractor-0007.md",
+        "sessions/distractor-0011.md"
+      ],
+      "metrics": {
+        "hit_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr_at_5": 0,
+        "ndcg_at_5": 0.0
+      },
+      "raw": {
+        "text": "1. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 9.500_\n\n2. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n3. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.585_\n\n4. **pagination status meeting 0** [note:sessions] — `sessions/distractor-0007.md`\n   ---\ntitle: \"pagination status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"pagination\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# pagination status meeting 0\n\nThe team reviewed the pagination dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://pagination-status-meeting-0`\n   permalink: `pagination-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.994_\n\n5. **cache status meeting 0** [note:sessions] — `sessions/distractor-0011.md`\n   ---\ntitle: \"cache status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"cache\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# cache status meeting 0\n\nThe team reviewed the cache dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-0`\n   permalink: `cache-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.994_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/ttl.md",
+        "concepts/idempotency.md",
+        "concepts/secrets.md",
+        "sessions/distractor-0007.md",
+        "sessions/distractor-0011.md"
+      ]
+    },
+    {
+      "id": "mcp-lexical",
+      "group": "lexical",
+      "query": "MCP initialize tools/list indexing",
+      "relevant": [
+        "concepts/mcp.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 701.7422999997507,
+      "paths": [
+        "concepts/mcp.md",
+        "sessions/distractor-0010.md",
+        "sessions/distractor-0022.md",
+        "sessions/distractor-0034.md",
+        "sessions/distractor-0046.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 23.709_\n\n2. **MCP status meeting 0** [note:sessions] — `sessions/distractor-0010.md`\n   # MCP status meeting 0 The team reviewed the MCP dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://mcp-status-meeting-0`\n   permalink: `mcp-status-meeting-0`\n   heading: `MCP status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n3. **MCP status meeting 1** [note:sessions] — `sessions/distractor-0022.md`\n   # MCP status meeting 1 The team reviewed the MCP dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://mcp-status-meeting-1`\n   permalink: `mcp-status-meeting-1`\n   heading: `MCP status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n4. **MCP status meeting 2** [note:sessions] — `sessions/distractor-0034.md`\n   # MCP status meeting 2 The team reviewed the MCP dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://mcp-status-meeting-2`\n   permalink: `mcp-status-meeting-2`\n   heading: `MCP status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n5. **MCP status meeting 3** [note:sessions] — `sessions/distractor-0046.md`\n   # MCP status meeting 3 The team reviewed the MCP dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://mcp-status-meeting-3`\n   permalink: `mcp-status-meeting-3`\n   heading: `MCP status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/mcp.md",
+        "concepts/wal.md",
+        "sessions/distractor-0010.md",
+        "sessions/distractor-0022.md",
+        "sessions/distractor-0034.md"
+      ]
+    },
+    {
+      "id": "outbox-paraphrase",
+      "group": "paraphrase",
+      "query": "How do we publish events reliably after changing business data?",
+      "relevant": [
+        "concepts/outbox.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 327.45400000567315,
+      "paths": [
+        "concepts/outbox.md",
+        "concepts/replay.md",
+        "concepts/idempotency.md",
+        "concepts/ttl.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 13.606_\n\n2. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   # Battle replay persisted attempts Battle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after the battle.\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   heading: `Battle replay persisted attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 9.593_\n\n3. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.149_\n\n4. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.049_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/outbox.md",
+        "concepts/replay.md",
+        "concepts/idempotency.md",
+        "concepts/ttl.md"
+      ]
+    },
+    {
+      "id": "wal-lexical",
+      "group": "lexical",
+      "query": "SQLite WAL busy_timeout",
+      "relevant": [
+        "concepts/wal.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 599.5209999964572,
+      "paths": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md",
+        "sessions/distractor-0024.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 17.669_\n\n2. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 6.943_\n\n3. **SQLite status meeting 0** [note:sessions] — `sessions/distractor-0000.md`\n   # SQLite status meeting 0 The team reviewed the SQLite dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-0`\n   permalink: `sqlite-status-meeting-0`\n   heading: `SQLite status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n4. **SQLite status meeting 1** [note:sessions] — `sessions/distractor-0012.md`\n   # SQLite status meeting 1 The team reviewed the SQLite dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-1`\n   permalink: `sqlite-status-meeting-1`\n   heading: `SQLite status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_\n\n5. **SQLite status meeting 2** [note:sessions] — `sessions/distractor-0024.md`\n   # SQLite status meeting 2 The team reviewed the SQLite dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://sqlite-status-meeting-2`\n   permalink: `sqlite-status-meeting-2`\n   heading: `SQLite status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.523_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "sessions/distractor-0000.md",
+        "sessions/distractor-0012.md",
+        "sessions/distractor-0024.md"
+      ]
+    },
+    {
+      "id": "replay-cross_language",
+      "group": "cross_language",
+      "query": "Como reproduzir batalha antiga sem alterar seu resultado apos balanceamento?",
+      "relevant": [
+        "concepts/replay.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 612.1972000037204,
+      "paths": [
+        "sessions/distractor-0009.md",
+        "sessions/distractor-0021.md",
+        "sessions/distractor-0033.md",
+        "sessions/distractor-0045.md",
+        "sessions/distractor-0057.md"
+      ],
+      "metrics": {
+        "hit_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr_at_5": 0,
+        "ndcg_at_5": 0.0
+      },
+      "raw": {
+        "text": "1. **GitHub status meeting 0** [note:sessions] — `sessions/distractor-0009.md`\n   ---\ntitle: \"GitHub status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# GitHub status meeting 0\n\nThe team reviewed the GitHub dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-0`\n   permalink: `github-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.759_\n\n2. **GitHub status meeting 1** [note:sessions] — `sessions/distractor-0021.md`\n   ---\ntitle: \"GitHub status meeting 1\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# GitHub status meeting 1\n\nThe team reviewed the GitHub dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-1`\n   permalink: `github-status-meeting-1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.759_\n\n3. **GitHub status meeting 2** [note:sessions] — `sessions/distractor-0033.md`\n   ---\ntitle: \"GitHub status meeting 2\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# GitHub status meeting 2\n\nThe team reviewed the GitHub dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-2`\n   permalink: `github-status-meeting-2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.759_\n\n4. **GitHub status meeting 3** [note:sessions] — `sessions/distractor-0045.md`\n   ---\ntitle: \"GitHub status meeting 3\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# GitHub status meeting 3\n\nThe team reviewed the GitHub dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-3`\n   permalink: `github-status-meeting-3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.759_\n\n5. **GitHub status meeting 4** [note:sessions] — `sessions/distractor-0057.md`\n   ---\ntitle: \"GitHub status meeting 4\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"GitHub\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# GitHub status meeting 4\n\nThe team reviewed the GitHub dashboard and colors in sprint 4. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-4`\n   permalink: `github-status-meeting-4`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.759_"
+      },
+      "legacy_paths_from_snippets": [
+        "sessions/distractor-0009.md",
+        "sessions/distractor-0021.md",
+        "sessions/distractor-0033.md",
+        "sessions/distractor-0045.md",
+        "sessions/distractor-0057.md"
+      ]
+    },
+    {
+      "id": "secrets-lexical",
+      "group": "lexical",
+      "query": "secrets redaction capture",
+      "relevant": [
+        "concepts/secrets.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 682.3607999976957,
+      "paths": [
+        "concepts/secrets.md",
+        "sessions/distractor-0008.md",
+        "sessions/distractor-0020.md",
+        "sessions/distractor-0032.md",
+        "sessions/distractor-0044.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 18.491_\n\n2. **secrets status meeting 0** [note:sessions] — `sessions/distractor-0008.md`\n   # secrets status meeting 0 The team reviewed the secrets dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://secrets-status-meeting-0`\n   permalink: `secrets-status-meeting-0`\n   heading: `secrets status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **secrets status meeting 1** [note:sessions] — `sessions/distractor-0020.md`\n   # secrets status meeting 1 The team reviewed the secrets dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://secrets-status-meeting-1`\n   permalink: `secrets-status-meeting-1`\n   heading: `secrets status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **secrets status meeting 2** [note:sessions] — `sessions/distractor-0032.md`\n   # secrets status meeting 2 The team reviewed the secrets dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://secrets-status-meeting-2`\n   permalink: `secrets-status-meeting-2`\n   heading: `secrets status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **secrets status meeting 3** [note:sessions] — `sessions/distractor-0044.md`\n   # secrets status meeting 3 The team reviewed the secrets dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://secrets-status-meeting-3`\n   permalink: `secrets-status-meeting-3`\n   heading: `secrets status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "sessions/distractor-0008.md",
+        "sessions/distractor-0020.md",
+        "sessions/distractor-0032.md",
+        "sessions/distractor-0044.md"
+      ]
+    },
+    {
+      "id": "absent-1",
+      "group": "absent",
+      "query": "receita bolo de cenoura cobertura chocolate",
+      "relevant": [],
+      "repeat": 0,
+      "latency_ms": 465.9977999981493,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/oauth.md",
+        "concepts/pagination.md",
+        "concepts/outbox.md",
+        "concepts/backup.md"
+      ],
+      "metrics": {
+        "correct_abstention": 0.0
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   ---\ntitle: \"Secrets redaction before capture\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"secrets\", \"redaction\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Secrets redaction before capture\n\nRedact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.978_\n\n2. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.736_\n\n3. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.697_\n\n4. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_\n\n5. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/oauth.md",
+        "concepts/pagination.md",
+        "concepts/outbox.md",
+        "concepts/backup.md"
+      ]
+    },
+    {
+      "id": "replay-lexical",
+      "group": "lexical",
+      "query": "battle replay persisted attempt",
+      "relevant": [
+        "concepts/replay.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 669.6713999990607,
+      "paths": [
+        "concepts/replay.md",
+        "sessions/distractor-0006.md",
+        "sessions/distractor-0018.md",
+        "sessions/distractor-0030.md",
+        "sessions/distractor-0042.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   # Battle replay persisted attempts Battle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after the battle.\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   heading: `Battle replay persisted attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 28.216_\n\n2. **replay status meeting 0** [note:sessions] — `sessions/distractor-0006.md`\n   # replay status meeting 0 The team reviewed the replay dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-0`\n   permalink: `replay-status-meeting-0`\n   heading: `replay status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **replay status meeting 1** [note:sessions] — `sessions/distractor-0018.md`\n   # replay status meeting 1 The team reviewed the replay dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-1`\n   permalink: `replay-status-meeting-1`\n   heading: `replay status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **replay status meeting 2** [note:sessions] — `sessions/distractor-0030.md`\n   # replay status meeting 2 The team reviewed the replay dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-2`\n   permalink: `replay-status-meeting-2`\n   heading: `replay status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **replay status meeting 3** [note:sessions] — `sessions/distractor-0042.md`\n   # replay status meeting 3 The team reviewed the replay dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://replay-status-meeting-3`\n   permalink: `replay-status-meeting-3`\n   heading: `replay status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/replay.md",
+        "sessions/distractor-0006.md",
+        "sessions/distractor-0018.md",
+        "sessions/distractor-0030.md",
+        "sessions/distractor-0042.md"
+      ]
+    },
+    {
+      "id": "capture",
+      "group": "multi_note",
+      "query": "agent memory credentials and cache invalidation",
+      "relevant": [
+        "concepts/secrets.md",
+        "concepts/ttl.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 499.9270000043907,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/ttl.md",
+        "sessions/distractor-0011.md",
+        "sessions/distractor-0023.md",
+        "sessions/distractor-0035.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 10.401_\n\n2. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 9.612_\n\n3. **cache status meeting 0** [note:sessions] — `sessions/distractor-0011.md`\n   # cache status meeting 0 The team reviewed the cache dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-0`\n   permalink: `cache-status-meeting-0`\n   heading: `cache status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **cache status meeting 1** [note:sessions] — `sessions/distractor-0023.md`\n   # cache status meeting 1 The team reviewed the cache dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-1`\n   permalink: `cache-status-meeting-1`\n   heading: `cache status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **cache status meeting 2** [note:sessions] — `sessions/distractor-0035.md`\n   # cache status meeting 2 The team reviewed the cache dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://cache-status-meeting-2`\n   permalink: `cache-status-meeting-2`\n   heading: `cache status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/ttl.md",
+        "sessions/distractor-0011.md",
+        "sessions/distractor-0023.md",
+        "sessions/distractor-0035.md"
+      ]
+    },
+    {
+      "id": "transaction",
+      "group": "multi_note",
+      "query": "transaction payment retry event publisher",
+      "relevant": [
+        "concepts/idempotency.md",
+        "concepts/outbox.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 599.3977999969502,
+      "paths": [
+        "concepts/outbox.md",
+        "concepts/idempotency.md",
+        "concepts/replay.md",
+        "sessions/distractor-0003.md",
+        "sessions/distractor-0015.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 16.515_\n\n2. **Idempotency payment retry** [note:concepts] — `concepts/idempotency.md`\n   # Idempotency payment retry Payment retries must reuse an idempotency key for the same purchase. Store the request key and response in the same database transaction to prevent duplicate charges.\n   source: `memory://idempotency-payment-retry`\n   permalink: `idempotency-payment-retry`\n   heading: `Idempotency payment retry`\n   _modified: 2026-10-01T00:00:00.000Z | score: 14.107_\n\n3. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   # Battle replay persisted attempts Battle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after the battle.\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   heading: `Battle replay persisted attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.495_\n\n4. **payment status meeting 0** [note:sessions] — `sessions/distractor-0003.md`\n   # payment status meeting 0 The team reviewed the payment dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://payment-status-meeting-0`\n   permalink: `payment-status-meeting-0`\n   heading: `payment status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **payment status meeting 1** [note:sessions] — `sessions/distractor-0015.md`\n   # payment status meeting 1 The team reviewed the payment dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://payment-status-meeting-1`\n   permalink: `payment-status-meeting-1`\n   heading: `payment status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/outbox.md",
+        "concepts/idempotency.md",
+        "concepts/replay.md",
+        "sessions/distractor-0003.md",
+        "sessions/distractor-0015.md"
+      ]
+    },
+    {
+      "id": "idempotency-cross_language",
+      "group": "cross_language",
+      "query": "Como evitar cobranca duplicada quando uma compra e reenviada?",
+      "relevant": [
+        "concepts/idempotency.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 625.2189000006183,
+      "paths": [
+        "concepts/pagination.md",
+        "concepts/oauth.md",
+        "concepts/mcp.md",
+        "sessions/distractor-0004.md",
+        "sessions/distractor-0016.md"
+      ],
+      "metrics": {
+        "hit_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr_at_5": 0,
+        "ndcg_at_5": 0.0
+      },
+      "raw": {
+        "text": "1. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.601_\n\n2. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.437_\n\n3. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   ---\ntitle: \"MCP startup lazy indexing\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"MCP\", \"indexing\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# MCP startup lazy indexing\n\nMCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection.\n\nRelated: [[concept\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.940_\n\n4. **outbox status meeting 0** [note:sessions] — `sessions/distractor-0004.md`\n   ---\ntitle: \"outbox status meeting 0\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"outbox\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# outbox status meeting 0\n\nThe team reviewed the outbox dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-0`\n   permalink: `outbox-status-meeting-0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.647_\n\n5. **outbox status meeting 1** [note:sessions] — `sessions/distractor-0016.md`\n   ---\ntitle: \"outbox status meeting 1\"\ncategory: sessions\nagent: Benchmark\nkind: fact\nentities: [\"outbox\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# outbox status meeting 1\n\nThe team reviewed the outbox dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://outbox-status-meeting-1`\n   permalink: `outbox-status-meeting-1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.647_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/pagination.md",
+        "concepts/oauth.md",
+        "concepts/mcp.md",
+        "sessions/distractor-0004.md",
+        "sessions/distractor-0016.md"
+      ]
+    },
+    {
+      "id": "backup-paraphrase",
+      "group": "paraphrase",
+      "query": "Como comprovar que a copia de seguranca funciona de verdade?",
+      "relevant": [
+        "concepts/backup.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 351.37050000048475,
+      "paths": [
+        "concepts/backup.md",
+        "concepts/replay.md",
+        "concepts/secrets.md",
+        "concepts/outbox.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.271_\n\n2. **Projetos Ativos** [note:hot] — `hot.md`\n   ---\ntype: hot-context\n---\n# Projetos Ativos\n\n> Last updated: never\n\n## Recent Activity\n\n   source: `memory://projetos-ativos`\n   permalink: `projetos-ativos`\n   _modified: 2026-10-11T03:25:17.464Z | score: 0.749_\n\n3. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   ---\ntitle: \"Battle replay persisted attempts\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"replay\", \"battle\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Battle replay persisted attempts\n\nBattle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after t\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.717_\n\n4. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   ---\ntitle: \"Secrets redaction before capture\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"secrets\", \"redaction\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Secrets redaction before capture\n\nRedact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.655_\n\n5. **Transactional outbox delivery** [note:concepts] — `concepts/outbox.md`\n   # Transactional outbox delivery Transactional outbox commits an event and the business change in one transaction. A separate publisher retries delivery. Consumers deduplicate messages because delivery is at least once.\n   source: `memory://transactional-outbox-delivery`\n   permalink: `transactional-outbox-delivery`\n   heading: `Transactional outbox delivery`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/backup.md",
+        "concepts/replay.md",
+        "concepts/secrets.md",
+        "concepts/outbox.md"
+      ]
+    },
+    {
+      "id": "backup-lexical",
+      "group": "lexical",
+      "query": "backup restauracao integridade",
+      "relevant": [
+        "concepts/backup.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 766.7909000010695,
+      "paths": [
+        "concepts/backup.md",
+        "sessions/distractor-0005.md",
+        "sessions/distractor-0017.md",
+        "sessions/distractor-0029.md",
+        "sessions/distractor-0041.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Backup recuperavel** [note:concepts] — `concepts/backup.md`\n   # Backup recuperavel Backup so e validado depois de restauracao em ambiente isolado e verificacao de integridade. Copiar um arquivo aberto sem snapshot pode produzir backup inconsistente.\n   source: `memory://backup-recuperavel`\n   permalink: `backup-recuperavel`\n   heading: `Backup recuperavel`\n   _modified: 2026-10-01T00:00:00.000Z | score: 16.966_\n\n2. **backup status meeting 0** [note:sessions] — `sessions/distractor-0005.md`\n   # backup status meeting 0 The team reviewed the backup dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-0`\n   permalink: `backup-status-meeting-0`\n   heading: `backup status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n3. **backup status meeting 1** [note:sessions] — `sessions/distractor-0017.md`\n   # backup status meeting 1 The team reviewed the backup dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-1`\n   permalink: `backup-status-meeting-1`\n   heading: `backup status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **backup status meeting 2** [note:sessions] — `sessions/distractor-0029.md`\n   # backup status meeting 2 The team reviewed the backup dashboard and colors in sprint 2. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-2`\n   permalink: `backup-status-meeting-2`\n   heading: `backup status meeting 2`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **backup status meeting 3** [note:sessions] — `sessions/distractor-0041.md`\n   # backup status meeting 3 The team reviewed the backup dashboard and colors in sprint 3. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://backup-status-meeting-3`\n   permalink: `backup-status-meeting-3`\n   heading: `backup status meeting 3`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/backup.md",
+        "sessions/distractor-0005.md",
+        "sessions/distractor-0017.md",
+        "sessions/distractor-0029.md",
+        "sessions/distractor-0041.md"
+      ]
+    },
+    {
+      "id": "mcp-paraphrase",
+      "group": "paraphrase",
+      "query": "Why does a memory server time out before tools become available?",
+      "relevant": [
+        "concepts/mcp.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 787.1515000006184,
+      "paths": [
+        "concepts/secrets.md",
+        "concepts/mcp.md",
+        "concepts/ttl.md",
+        "concepts/pagination.md",
+        "concepts/wal.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.5,
+        "ndcg_at_5": 0.6309297535714575
+      },
+      "raw": {
+        "text": "1. **Secrets redaction before capture** [note:concepts] — `concepts/secrets.md`\n   # Secrets redaction before capture Redact API keys, bearer tokens, cookies and credentials before writing memory or transport queues. Sanitizing only when displaying search results is too late.\n   source: `memory://secrets-redaction-before-capture`\n   permalink: `secrets-redaction-before-capture`\n   heading: `Secrets redaction before capture`\n   _modified: 2026-10-01T00:00:00.000Z | score: 10.157_\n\n2. **MCP startup lazy indexing** [note:concepts] — `concepts/mcp.md`\n   # MCP startup lazy indexing MCP initialize and tools/list must return before expensive indexing. Defer loading a large vault until the first retrieval call and reuse a persistent SQLite connection. Related: [[concepts/wal.md]]\n   source: `memory://mcp-startup-lazy-indexing`\n   permalink: `mcp-startup-lazy-indexing`\n   heading: `MCP startup lazy indexing`\n   _modified: 2026-10-01T00:00:00.000Z | score: 8.663_\n\n3. **Cache TTL invalidation** [note:concepts] — `concepts/ttl.md`\n   # Cache TTL invalidation Cache entries have an expiry time called TTL. Evict an entry when its source document changes, even before TTL ends. A stale cached answer can contradict the current source.\n   source: `memory://cache-ttl-invalidation`\n   permalink: `cache-ttl-invalidation`\n   heading: `Cache TTL invalidation`\n   _modified: 2026-10-01T00:00:00.000Z | score: 7.809_\n\n4. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.190_\n\n5. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 4.081_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/secrets.md",
+        "concepts/mcp.md",
+        "concepts/wal.md",
+        "concepts/ttl.md",
+        "concepts/pagination.md"
+      ]
+    },
+    {
+      "id": "outbox-cross_language",
+      "group": "cross_language",
+      "query": "Como garantir entrega de eventos se o processo cair depois de gravar no banco?",
+      "relevant": [
+        "concepts/outbox.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 552.0518000048469,
+      "paths": [
+        "concepts/wal.md",
+        "concepts/replay.md",
+        "concepts/pagination.md",
+        "sessions/distractor-0008.md"
+      ],
+      "metrics": {
+        "hit_at_5": 0.0,
+        "recall_at_5": 0.0,
+        "mrr_at_5": 0,
+        "ndcg_at_5": 0.0
+      },
+      "raw": {
+        "text": "1. **SQLite WAL concorrencia** [note:concepts] — `concepts/wal.md`\n   # SQLite WAL concorrencia SQLite WAL permite leitores simultaneos durante uma escrita. WAL nao transforma SQLite em banco com varios escritores concorrentes. Use busy_timeout e transacoes curtas. Related: [[concepts/mcp.md]]\n   source: `memory://sqlite-wal-concorrencia`\n   permalink: `sqlite-wal-concorrencia`\n   heading: `SQLite WAL concorrencia`\n   _modified: 2026-10-01T00:00:00.000Z | score: 5.082_\n\n2. **Battle replay persisted attempts** [note:concepts] — `concepts/replay.md`\n   ---\ntitle: \"Battle replay persisted attempts\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"replay\", \"battle\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Battle replay persisted attempts\n\nBattle replay reads the stored attempt snapshot and ordered persisted events. Never recalculate combat with current character stats because balancing may have changed after t\n   source: `memory://battle-replay-persisted-attempts`\n   permalink: `battle-replay-persisted-attempts`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.777_\n\n3. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   ---\ntitle: \"Paginacao cursor ordenacao\"\ncategory: concepts\nagent: Benchmark\nkind: fact\nentities: [\"pagination\", \"cursor\"]\ncreated: 2026-10-01T00:00:00Z\nmodified: 2026-10-01T00:00:00Z\n---\n\n# Paginacao cursor ordenacao\n\nPaginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.747_\n\n4. **Projetos Ativos** [note:hot] — `hot.md`\n   ---\ntype: hot-context\n---\n# Projetos Ativos\n\n> Last updated: never\n\n## Recent Activity\n\n   source: `memory://projetos-ativos`\n   permalink: `projetos-ativos`\n   _modified: 2026-10-11T03:25:17.464Z | score: 0.713_\n\n5. **secrets status meeting 0** [note:sessions] — `sessions/distractor-0008.md`\n   # secrets status meeting 0 The team reviewed the secrets dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://secrets-status-meeting-0`\n   permalink: `secrets-status-meeting-0`\n   heading: `secrets status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 0.000_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/wal.md",
+        "concepts/mcp.md",
+        "concepts/replay.md",
+        "concepts/pagination.md",
+        "sessions/distractor-0008.md"
+      ]
+    },
+    {
+      "id": "contribution",
+      "group": "multi_note",
+      "query": "Google OAuth and GitHub external contributions",
+      "relevant": [
+        "concepts/oauth.md",
+        "concepts/rules.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 843.9021999947727,
+      "paths": [
+        "concepts/rules.md",
+        "concepts/oauth.md",
+        "sessions/distractor-0001.md",
+        "sessions/distractor-0009.md",
+        "sessions/distractor-0013.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Protected branch contribution** [note:concepts] — `concepts/rules.md`\n   # Protected branch contribution External contributions use forks and pull requests. Protect main against force pushes and deletion. Require successful CI checks before merging; required reviews need another eligible reviewer.\n   source: `memory://protected-branch-contribution`\n   permalink: `protected-branch-contribution`\n   heading: `Protected branch contribution`\n   _modified: 2026-10-01T00:00:00.000Z | score: 12.319_\n\n2. **OAuth Google acesso negado** [note:concepts] — `concepts/oauth.md`\n   # OAuth Google acesso negado Google OAuth retorna access_denied quando o app externo esta em teste e o usuario nao foi adicionado aos test users. Cadastre o usuario na tela de consentimento.\n   source: `memory://oauth-google-acesso-negado`\n   permalink: `oauth-google-acesso-negado`\n   heading: `OAuth Google acesso negado`\n   _modified: 2026-10-01T00:00:00.000Z | score: 10.430_\n\n3. **OAuth status meeting 0** [note:sessions] — `sessions/distractor-0001.md`\n   # OAuth status meeting 0 The team reviewed the OAuth dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-0`\n   permalink: `oauth-status-meeting-0`\n   heading: `OAuth status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n4. **GitHub status meeting 0** [note:sessions] — `sessions/distractor-0009.md`\n   # GitHub status meeting 0 The team reviewed the GitHub dashboard and colors in sprint 0. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://github-status-meeting-0`\n   permalink: `github-status-meeting-0`\n   heading: `GitHub status meeting 0`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_\n\n5. **OAuth status meeting 1** [note:sessions] — `sessions/distractor-0013.md`\n   # OAuth status meeting 1 The team reviewed the OAuth dashboard and colors in sprint 1. No technical decision or implementation guidance was recorded. Agenda: fonts, spacing, icons and presentation slides.\n   source: `memory://oauth-status-meeting-1`\n   permalink: `oauth-status-meeting-1`\n   heading: `OAuth status meeting 1`\n   _modified: 2026-10-01T00:00:00.000Z | score: 3.678_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/rules.md",
+        "concepts/oauth.md",
+        "sessions/distractor-0001.md",
+        "sessions/distractor-0009.md",
+        "sessions/distractor-0013.md"
+      ]
+    },
+    {
+      "id": "pagination-lexical",
+      "group": "lexical",
+      "query": "paginacao cursor timestamp",
+      "relevant": [
+        "concepts/pagination.md"
+      ],
+      "repeat": 0,
+      "latency_ms": 430.846900002507,
+      "paths": [
+        "concepts/pagination.md"
+      ],
+      "metrics": {
+        "hit_at_5": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      "raw": {
+        "text": "1. **Paginacao cursor ordenacao** [note:concepts] — `concepts/pagination.md`\n   # Paginacao cursor ordenacao Paginacao por cursor usa ordenacao estavel com timestamp e identificador unico como desempate. Offset pode repetir ou omitir registros quando novas linhas sao inseridas.\n   source: `memory://paginacao-cursor-ordenacao`\n   permalink: `paginacao-cursor-ordenacao`\n   heading: `Paginacao cursor ordenacao`\n   _modified: 2026-10-01T00:00:00.000Z | score: 22.097_"
+      },
+      "legacy_paths_from_snippets": [
+        "concepts/pagination.md"
+      ]
+    }
+  ]
+}

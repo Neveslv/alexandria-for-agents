@@ -1,0 +1,350 @@
+[
+  {
+    "id": "wal-lexical",
+    "group": "lexical",
+    "query": "SQLite WAL busy_timeout",
+    "relevant": [
+      "concepts/wal.md"
+    ]
+  },
+  {
+    "id": "wal-paraphrase",
+    "group": "paraphrase",
+    "query": "Como evitar database locked com leitores e escritores simultaneos?",
+    "relevant": [
+      "concepts/wal.md"
+    ]
+  },
+  {
+    "id": "wal-cross_language",
+    "group": "cross_language",
+    "query": "How can SQLite readers continue while a writer updates the database?",
+    "relevant": [
+      "concepts/wal.md"
+    ]
+  },
+  {
+    "id": "oauth-lexical",
+    "group": "lexical",
+    "query": "OAuth access_denied test users",
+    "relevant": [
+      "concepts/oauth.md"
+    ]
+  },
+  {
+    "id": "oauth-paraphrase",
+    "group": "paraphrase",
+    "query": "Por que o login Google bloqueia uma conta durante teste do aplicativo?",
+    "relevant": [
+      "concepts/oauth.md"
+    ]
+  },
+  {
+    "id": "oauth-cross_language",
+    "group": "cross_language",
+    "query": "Google consent refuses an account while the application is in testing mode",
+    "relevant": [
+      "concepts/oauth.md"
+    ]
+  },
+  {
+    "id": "stock-lexical",
+    "group": "lexical",
+    "query": "FEFO lote vencimento",
+    "relevant": [
+      "concepts/stock.md"
+    ]
+  },
+  {
+    "id": "stock-paraphrase",
+    "group": "paraphrase",
+    "query": "Qual caixa de remedio devemos retirar primeiro para evitar expiracao?",
+    "relevant": [
+      "concepts/stock.md"
+    ]
+  },
+  {
+    "id": "stock-cross_language",
+    "group": "cross_language",
+    "query": "Which medicine batch should be consumed before its expiry date?",
+    "relevant": [
+      "concepts/stock.md"
+    ]
+  },
+  {
+    "id": "idempotency-lexical",
+    "group": "lexical",
+    "query": "idempotency payment retries",
+    "relevant": [
+      "concepts/idempotency.md"
+    ]
+  },
+  {
+    "id": "idempotency-paraphrase",
+    "group": "paraphrase",
+    "query": "How do we stop a retry from charging a customer twice?",
+    "relevant": [
+      "concepts/idempotency.md"
+    ]
+  },
+  {
+    "id": "idempotency-cross_language",
+    "group": "cross_language",
+    "query": "Como evitar cobranca duplicada quando uma compra e reenviada?",
+    "relevant": [
+      "concepts/idempotency.md"
+    ]
+  },
+  {
+    "id": "outbox-lexical",
+    "group": "lexical",
+    "query": "transactional outbox consumers",
+    "relevant": [
+      "concepts/outbox.md"
+    ]
+  },
+  {
+    "id": "outbox-paraphrase",
+    "group": "paraphrase",
+    "query": "How do we publish events reliably after changing business data?",
+    "relevant": [
+      "concepts/outbox.md"
+    ]
+  },
+  {
+    "id": "outbox-cross_language",
+    "group": "cross_language",
+    "query": "Como garantir entrega de eventos se o processo cair depois de gravar no banco?",
+    "relevant": [
+      "concepts/outbox.md"
+    ]
+  },
+  {
+    "id": "backup-lexical",
+    "group": "lexical",
+    "query": "backup restauracao integridade",
+    "relevant": [
+      "concepts/backup.md"
+    ]
+  },
+  {
+    "id": "backup-paraphrase",
+    "group": "paraphrase",
+    "query": "Como comprovar que a copia de seguranca funciona de verdade?",
+    "relevant": [
+      "concepts/backup.md"
+    ]
+  },
+  {
+    "id": "backup-cross_language",
+    "group": "cross_language",
+    "query": "What proves that a database backup can actually be recovered?",
+    "relevant": [
+      "concepts/backup.md"
+    ]
+  },
+  {
+    "id": "replay-lexical",
+    "group": "lexical",
+    "query": "battle replay persisted attempt",
+    "relevant": [
+      "concepts/replay.md"
+    ]
+  },
+  {
+    "id": "replay-paraphrase",
+    "group": "paraphrase",
+    "query": "How should old battles remain accurate after character balancing changes?",
+    "relevant": [
+      "concepts/replay.md"
+    ]
+  },
+  {
+    "id": "replay-cross_language",
+    "group": "cross_language",
+    "query": "Como reproduzir batalha antiga sem alterar seu resultado apos balanceamento?",
+    "relevant": [
+      "concepts/replay.md"
+    ]
+  },
+  {
+    "id": "pagination-lexical",
+    "group": "lexical",
+    "query": "paginacao cursor timestamp",
+    "relevant": [
+      "concepts/pagination.md"
+    ]
+  },
+  {
+    "id": "pagination-paraphrase",
+    "group": "paraphrase",
+    "query": "Como navegar registros sem duplicatas enquanto entram novos dados?",
+    "relevant": [
+      "concepts/pagination.md"
+    ]
+  },
+  {
+    "id": "pagination-cross_language",
+    "group": "cross_language",
+    "query": "How do we avoid duplicate records when paging while inserts happen?",
+    "relevant": [
+      "concepts/pagination.md"
+    ]
+  },
+  {
+    "id": "secrets-lexical",
+    "group": "lexical",
+    "query": "secrets redaction capture",
+    "relevant": [
+      "concepts/secrets.md"
+    ]
+  },
+  {
+    "id": "secrets-paraphrase",
+    "group": "paraphrase",
+    "query": "At what stage should credentials be removed from agent memory?",
+    "relevant": [
+      "concepts/secrets.md"
+    ]
+  },
+  {
+    "id": "secrets-cross_language",
+    "group": "cross_language",
+    "query": "Quando remover senhas e tokens antes de registrar memoria?",
+    "relevant": [
+      "concepts/secrets.md"
+    ]
+  },
+  {
+    "id": "rules-lexical",
+    "group": "lexical",
+    "query": "protected main pull requests",
+    "relevant": [
+      "concepts/rules.md"
+    ]
+  },
+  {
+    "id": "rules-paraphrase",
+    "group": "paraphrase",
+    "query": "How can outside contributors help without writing directly to main?",
+    "relevant": [
+      "concepts/rules.md"
+    ]
+  },
+  {
+    "id": "rules-cross_language",
+    "group": "cross_language",
+    "query": "Como receber contribuicoes externas sem liberar escrita na branch principal?",
+    "relevant": [
+      "concepts/rules.md"
+    ]
+  },
+  {
+    "id": "mcp-lexical",
+    "group": "lexical",
+    "query": "MCP initialize tools/list indexing",
+    "relevant": [
+      "concepts/mcp.md"
+    ]
+  },
+  {
+    "id": "mcp-paraphrase",
+    "group": "paraphrase",
+    "query": "Why does a memory server time out before tools become available?",
+    "relevant": [
+      "concepts/mcp.md"
+    ]
+  },
+  {
+    "id": "mcp-cross_language",
+    "group": "cross_language",
+    "query": "Como evitar timeout no handshake enquanto o vault e indexado?",
+    "relevant": [
+      "concepts/mcp.md"
+    ]
+  },
+  {
+    "id": "ttl-lexical",
+    "group": "lexical",
+    "query": "cache TTL invalidation",
+    "relevant": [
+      "concepts/ttl.md"
+    ]
+  },
+  {
+    "id": "ttl-paraphrase",
+    "group": "paraphrase",
+    "query": "How should cached answers react when their source file changes?",
+    "relevant": [
+      "concepts/ttl.md"
+    ]
+  },
+  {
+    "id": "ttl-cross_language",
+    "group": "cross_language",
+    "query": "Como invalidar respostas em cache quando a nota original muda?",
+    "relevant": [
+      "concepts/ttl.md"
+    ]
+  },
+  {
+    "id": "storage",
+    "group": "multi_note",
+    "query": "SQLite memory startup and writer contention",
+    "relevant": [
+      "concepts/wal.md",
+      "concepts/mcp.md"
+    ]
+  },
+  {
+    "id": "capture",
+    "group": "multi_note",
+    "query": "agent memory credentials and cache invalidation",
+    "relevant": [
+      "concepts/secrets.md",
+      "concepts/ttl.md"
+    ]
+  },
+  {
+    "id": "transaction",
+    "group": "multi_note",
+    "query": "transaction payment retry event publisher",
+    "relevant": [
+      "concepts/idempotency.md",
+      "concepts/outbox.md"
+    ]
+  },
+  {
+    "id": "contribution",
+    "group": "multi_note",
+    "query": "Google OAuth and GitHub external contributions",
+    "relevant": [
+      "concepts/oauth.md",
+      "concepts/rules.md"
+    ]
+  },
+  {
+    "id": "absent-0",
+    "group": "absent",
+    "query": "quantum entanglement superconducting qubits",
+    "relevant": []
+  },
+  {
+    "id": "absent-1",
+    "group": "absent",
+    "query": "receita bolo de cenoura cobertura chocolate",
+    "relevant": []
+  },
+  {
+    "id": "absent-2",
+    "group": "absent",
+    "query": "ZXQ_UNSEEN_918273",
+    "relevant": []
+  },
+  {
+    "id": "absent-3",
+    "group": "absent",
+    "query": "orbital mechanics Jupiter moons",
+    "relevant": []
+  }
+]

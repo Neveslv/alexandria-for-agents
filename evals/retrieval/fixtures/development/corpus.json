@@ -1,0 +1,230 @@
+[
+  {
+    "path": "decisions/lease.md",
+    "title": "Lease fencing",
+    "body": "# Lease fencing\n\nA lease expires after its deadline. Every writer includes a monotonically increasing fencing token; storage rejects older tokens.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/dlq.md",
+    "title": "Fila de mensagens mortas",
+    "body": "# Fila de mensagens mortas\n\nDepois de cinco tentativas uma mensagem vai para a fila morta. Um operador corrige a causa antes de reenviar.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/etag.md",
+    "title": "Conditional edits",
+    "body": "# Conditional edits\n\nEdits send If-Match with the previously read ETag. A mismatching version returns 412 to prevent lost updates.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/clock.md",
+    "title": "Relogio monotono",
+    "body": "# Relogio monotono\n\nUse um relogio monotono para duracoes e timeout. O relogio de parede pode retroceder com sincronizacao.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/quota.md",
+    "title": "Quota atual Boreal",
+    "body": "# Quota atual Boreal\n\nDesde 2026-10-08 a quota Boreal e 23 requisicoes por minuto; substitui a quota anterior.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/old-quota.md",
+    "title": "Quota historica Boreal",
+    "body": "# Quota historica Boreal\n\nAntes de 2026-10-08 Boreal permitia 11 requisicoes por minuto. Registro historico substituido pela quota atual.",
+    "entities": [],
+    "kind": "fact",
+    "status": "superseded",
+    "modified": "2026-10-02T00:00:00Z",
+    "mtime": 1790899200
+  },
+  {
+    "path": "sessions/noise-000.md",
+    "title": "Lease fencing visual review",
+    "body": "# Lease fencing visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-001.md",
+    "title": "Fila de mensagens mortas visual review",
+    "body": "# Fila de mensagens mortas visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-002.md",
+    "title": "Conditional edits visual review",
+    "body": "# Conditional edits visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-003.md",
+    "title": "Relogio monotono visual review",
+    "body": "# Relogio monotono visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-004.md",
+    "title": "Quota atual Boreal visual review",
+    "body": "# Quota atual Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-005.md",
+    "title": "Quota historica Boreal visual review",
+    "body": "# Quota historica Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-006.md",
+    "title": "Lease fencing visual review",
+    "body": "# Lease fencing visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-007.md",
+    "title": "Fila de mensagens mortas visual review",
+    "body": "# Fila de mensagens mortas visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-008.md",
+    "title": "Conditional edits visual review",
+    "body": "# Conditional edits visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-009.md",
+    "title": "Relogio monotono visual review",
+    "body": "# Relogio monotono visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-010.md",
+    "title": "Quota atual Boreal visual review",
+    "body": "# Quota atual Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-011.md",
+    "title": "Quota historica Boreal visual review",
+    "body": "# Quota historica Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-012.md",
+    "title": "Lease fencing visual review",
+    "body": "# Lease fencing visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-013.md",
+    "title": "Fila de mensagens mortas visual review",
+    "body": "# Fila de mensagens mortas visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-014.md",
+    "title": "Conditional edits visual review",
+    "body": "# Conditional edits visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-015.md",
+    "title": "Relogio monotono visual review",
+    "body": "# Relogio monotono visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-016.md",
+    "title": "Quota atual Boreal visual review",
+    "body": "# Quota atual Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-017.md",
+    "title": "Quota historica Boreal visual review",
+    "body": "# Quota historica Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-018.md",
+    "title": "Lease fencing visual review",
+    "body": "# Lease fencing visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-019.md",
+    "title": "Fila de mensagens mortas visual review",
+    "body": "# Fila de mensagens mortas visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-020.md",
+    "title": "Conditional edits visual review",
+    "body": "# Conditional edits visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-021.md",
+    "title": "Relogio monotono visual review",
+    "body": "# Relogio monotono visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-022.md",
+    "title": "Quota atual Boreal visual review",
+    "body": "# Quota atual Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-023.md",
+    "title": "Quota historica Boreal visual review",
+    "body": "# Quota historica Boreal visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  }
+]

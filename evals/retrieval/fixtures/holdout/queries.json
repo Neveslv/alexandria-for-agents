@@ -1,0 +1,154 @@
+[
+  {
+    "id": "checksum-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Quando conferir a integridade de um arquivo recebido?",
+    "relevant": [
+      "decisions/checksum.md"
+    ]
+  },
+  {
+    "id": "checksum-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "How should a receiver verify a transferred file before publishing?",
+    "relevant": [
+      "decisions/checksum.md"
+    ]
+  },
+  {
+    "id": "drain-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Quanto tempo aguardar pedidos ativos no encerramento?",
+    "relevant": [
+      "decisions/drain.md"
+    ]
+  },
+  {
+    "id": "drain-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "How long does graceful drain wait for active requests?",
+    "relevant": [
+      "decisions/drain.md"
+    ]
+  },
+  {
+    "id": "watermark-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Como tratar eventos que chegam apos a janela?",
+    "relevant": [
+      "decisions/watermark.md"
+    ]
+  },
+  {
+    "id": "watermark-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "Where do events arriving past the watermark go?",
+    "relevant": [
+      "decisions/watermark.md"
+    ]
+  },
+  {
+    "id": "bulkhead-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Como evitar que analise lenta esgote os workers de cobranca?",
+    "relevant": [
+      "decisions/bulkhead.md"
+    ]
+  },
+  {
+    "id": "bulkhead-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "How can billing retain capacity when analytics is slow?",
+    "relevant": [
+      "decisions/bulkhead.md"
+    ]
+  },
+  {
+    "id": "region-pt",
+    "group": "updated",
+    "language": "pt",
+    "query": "Qual e a regiao atual de backups Cedro?",
+    "relevant": [
+      "decisions/region.md"
+    ]
+  },
+  {
+    "id": "region-en",
+    "group": "updated",
+    "language": "en",
+    "query": "Which backup region does Cedro currently use?",
+    "relevant": [
+      "decisions/region.md"
+    ]
+  },
+  {
+    "id": "old-region-pt",
+    "group": "history",
+    "language": "pt",
+    "query": "Qual era a regiao de backups Cedro antes de 9 de outubro?",
+    "relevant": [
+      "decisions/old-region.md"
+    ]
+  },
+  {
+    "id": "old-region-en",
+    "group": "history",
+    "language": "en",
+    "query": "Where were Cedro backups stored before October 9?",
+    "relevant": [
+      "decisions/old-region.md"
+    ]
+  },
+  {
+    "id": "multi-0",
+    "group": "multi_note",
+    "language": "pt",
+    "query": "Quando conferir a integridade de um arquivo recebido? Quanto tempo aguardar pedidos ativos no encerramento?",
+    "relevant": [
+      "decisions/checksum.md",
+      "decisions/drain.md"
+    ]
+  },
+  {
+    "id": "multi-1",
+    "group": "multi_note",
+    "language": "en",
+    "query": "Where do events arriving past the watermark go? How can billing retain capacity when analytics is slow?",
+    "relevant": [
+      "decisions/watermark.md",
+      "decisions/bulkhead.md"
+    ]
+  },
+  {
+    "id": "absent-0",
+    "group": "absent",
+    "query": "Geometria de cristais de ametista",
+    "relevant": []
+  },
+  {
+    "id": "absent-1",
+    "group": "absent",
+    "query": "Instructions for tuning a harpsichord",
+    "relevant": []
+  },
+  {
+    "id": "absent-2",
+    "group": "absent",
+    "query": "UNSEEN_holdout_7789",
+    "relevant": []
+  },
+  {
+    "id": "absent-3",
+    "group": "absent",
+    "query": "Receita de geleia de maracuja",
+    "relevant": []
+  }
+]
