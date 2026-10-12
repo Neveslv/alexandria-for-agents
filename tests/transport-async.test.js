@@ -1,0 +1,43 @@
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const os = require('node:os');
+const { spawnSync, spawn } = require('node:child_process');
+const { Readable } = require('node:stream');
+const { processLine } = require('../alexandria-mcp/lib/stdio');
+function deferred() { let resolve, reject; const promise = new Promise((yes,no)=>{resolve=yes;reject=no;}); promise.catch(()=>{}); return {promise,resolve,reject}; }
+function harness(handler) { const events=[], responses=[]; return {events,responses,run:(id=1,method='tools/call')=>processLine(JSON.stringify({jsonrpc:'2.0',...(id === 'notification' ? {} : {id}),method,params:{name:'vault_read',arguments:{path:'PRIVATE_CONTENT'}}}),{handleRequest:handler,tools:new Set(['vault_read']),telemetry:{record:e=>events.push(e)},send:r=>responses.push(JSON.parse(JSON.stringify(r)))})}; }
+test('async-result-not-empty-object',async()=>{const d=deferred(),h=harness(()=>d.promise);const pending=h.run();d.resolve({content:[{type:'text',text:'found'}]});await pending;assert.deepEqual(h.responses,[{jsonrpc:'2.0',id:1,result:{content:[{type:'text',text:'found'}]}}]);});
+test('rejected-promise-isError',async()=>{const d=deferred(),h=harness(()=>d.promise);const pending=h.run();d.reject(Error('PRIVATE_CONTENT'));await pending;assert.equal(h.responses[0].result.isError,true);assert.equal(h.events[1].error_category,'execution');assert.ok(!JSON.stringify([...h.events,...h.responses]).includes('PRIVATE_CONTENT'));});
+test('sync-result-compatible',async()=>{const h=harness(()=>({content:[]}));await h.run();assert.deepEqual(h.responses[0].result,{content:[]});});
+test('notification-no-response',async()=>{const d=deferred(),h=harness(()=>d.promise);const pending=h.run('notification','notifications/initialized');d.resolve({content:[]});await pending;assert.equal(h.responses.length,0);});
+test('parallel-ids',async()=>{const a=deferred(),b=deferred();const h=harness(r=>r.id===1?a.promise:b.promise);const pending=[h.run(1),h.run(2)];b.resolve({content:[{type:'text',text:'second'}]});await pending[1];a.resolve({content:[{type:'text',text:'first'}]});await pending[0];assert.deepEqual(h.responses.map(r=>[r.id,r.result.content[0].text]),[[2,'second'],[1,'first']]);});
+test('telemetry-after-settlement',async()=>{const d=deferred(),h=harness(()=>d.promise);const pending=h.run();assert.equal(h.events.length,1);assert.equal(h.responses.length,0);await new Promise(resolve=>setTimeout(resolve,30));d.resolve({content:[{type:'text',text:'PRIVATE_CONTENT'}]});await pending;assert.ok(h.events[1].duration_ms>=25);assert.ok(!JSON.stringify(h.events).includes('PRIVATE_CONTENT'));});
+function fixture(t,files,kernel) {const dir=fs.mkdtempSync(path.join(os.tmpdir(),'alexandria-async-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));for(const file of files){const dest=path.join(dir,file);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.copyFileSync(path.join(__dirname,'../alexandria-mcp',file),dest);}fs.mkdirSync(path.join(dir,'lib'),{recursive:true});fs.writeFileSync(path.join(dir,'lib/kernel.js'),kernel);return dir;}
+const asyncKernel=`exports.ensureReady=()=>{throw Error('indexing must be lazy')};
+exports.mcpText=r=>r.content[0].text;
+exports.dispatch=async(name)=>({content:[{type:'text',text:name==='vault_write'?'Nota salva: concepts/Synthetic.md':name+' settled'}]});
+exports.collectSearchResults=async()=>({items:[{path:'concepts/Synthetic.md',title:'Synthetic',snippet:'settled'}]});
+exports.collectVaultHealth=async()=>({ok:true});
+exports.collectGraphNeighbors=async()=>({nodes:[{title:'Synthetic'}]});
+exports.findInboxNote=async()=>({relPath:'sessions/Inbox.md',kind:'fact',title:'Inbox',content:'body'});
+exports.inboxBodyFromMarkdown=()=> 'body';exports.markInboxPromoted=async()=>true;exports.normalizeCaptureKind=()=> 'fact';`;
+async function httpRequest(handler,url,body) {const req=Readable.from(body ? [Buffer.from(JSON.stringify(body))] : []);Object.assign(req,{method:body?'POST':'GET',url,headers:{host:'127.0.0.1'}});let status,payload;const res={writeHead:s=>{status=s;},end:p=>{payload=JSON.parse(p);}};await handler(req,res);return {status,body:payload};}
+test('http-awaits-result and initialization stays lazy',async t=>{const dir=fixture(t,['http/app.js','http/openapi.js'],asyncKernel);const handler=require(path.join(dir,'http/app')).createHandler();for(const [url,body,expected] of [['/v1/ask',{query:'Synthetic'},r=>r.recall==='vault_recall settled'&&r.items[0].title==='Synthetic'],['/v1/search',{query:'Synthetic'},r=>r.text==='vault_search settled'&&r.items.length===1],['/v1/note?path=concepts/Synthetic.md',null,r=>r.content==='vault_read settled'],['/v1/recent',null,r=>r.text==='vault_recent_activity settled'],['/v1/graph',null,r=>r.nodes[0].title==='Synthetic'],['/v1/vault/health',null,r=>r.ok===true],['/v1/capture',{text:'Synthetic'},r=>r.candidates.length===1],['/v1/capture',{text:'Synthetic',confirm:true},r=>r.path==='concepts/Synthetic.md'],['/v1/promote',{path:'sessions/Inbox.md'},r=>r.canonical_path==='concepts/Synthetic.md']]){const result=await httpRequest(handler,url,body);assert.equal(result.status,200,url);assert.ok(expected(result.body),url);}});
+test('http rejected operations sanitized including graph',async t=>{const dir=fixture(t,['http/app.js','http/openapi.js'],asyncKernel+`\nexports.ensureReady=()=>{};exports.collectGraphNeighbors=async()=>{throw Error('PRIVATE_CONTENT')};exports.dispatch=async()=>{throw Error('PRIVATE_CONTENT')};`);const handler=require(path.join(dir,'http/app')).createHandler();for(const [url,body] of [['/v1/graph',null],['/v1/ask',{query:'Synthetic'}]]){const result=await httpRequest(handler,url,body);assert.equal(result.status,500);assert.ok(!JSON.stringify(result).includes('PRIVATE_CONTENT'));}});
+test('stdio discovery stays lazy and EOF drains calls before closing watcher',t=>{const dir=fixture(t,['server.js','lib/stdio.js','lib/telemetry.js'],`exports.TOOLS=[{name:'vault_read'}];exports.ensureReady=()=>{throw Error('must stay lazy')};let watcher=setInterval(()=>{},1000);let settled=false;exports.handleRequest=r=>r.method==='tools/list'?{tools:exports.TOOLS}:new Promise(resolve=>setTimeout(()=>{settled=true;resolve({content:[{type:'text',text:'settled'}]});},30));exports.close=async()=>{if(!settled)throw Error('closed before settlement');clearInterval(watcher);};`);const input=[{jsonrpc:'2.0',id:1,method:'tools/list'},{jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'vault_read'}}].map(JSON.stringify).join('\n')+'\n';const result=spawnSync(process.execPath,[path.join(dir,'server.js')],{input,encoding:'utf8',timeout:2000,env:{...process.env,ALEXANDRIA_TELEMETRY:'0'}});assert.equal(result.status,0,result.stderr);const responses=result.stdout.trim().split('\n').map(JSON.parse);assert.equal(responses.length,2);assert.equal(responses[1].result.content[0].text,'settled');});
+
+
+test('signal drains pending requests and closes kernel once',async t=>{
+  const dir=fixture(t,['server.js','lib/stdio.js','lib/telemetry.js'],`exports.TOOLS=[{name:'vault_read'}];let watcher=setInterval(()=>{},1000);let settled=false;exports.handleRequest=()=>{setTimeout(()=>process.emit('SIGINT'),5);return new Promise(resolve=>setTimeout(()=>{settled=true;resolve({content:[]});},30));};exports.close=async()=>{if(!settled)throw Error('closed too early');const fs=require('node:fs'),path=require('node:path');fs.appendFileSync(path.join(__dirname,'closed'),'close\\n');clearInterval(watcher);};`);
+  const child=spawn(process.execPath,[path.join(dir,'server.js')],{env:{...process.env,ALEXANDRIA_TELEMETRY:'0'}});
+  t.after(()=>{if(child.exitCode===null)child.kill();});
+  let stdout='',stderr='';child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);
+  const done=new Promise((resolve,reject)=>{child.once('error',reject);child.once('close',code=>resolve(code));});
+  child.stdin.write(JSON.stringify({jsonrpc:'2.0',id:1,method:'tools/call',params:{name:'vault_read'}})+'\n');
+  const timer=setTimeout(()=>child.kill(),2000);const code=await done;clearTimeout(timer);
+  assert.equal(code,130,stderr);assert.equal(JSON.parse(stdout).id,1);assert.equal(fs.readFileSync(path.join(dir,'lib/closed'),'utf8'),'close\n');
+});
+test('discovery rejected Promise returns sanitized internal error',async()=>{const d=deferred(),h=harness(()=>d.promise);const pending=h.run(4,'tools/list');d.reject(Error('PRIVATE_CONTENT'));await pending;assert.equal(h.responses[0].error.code,-32603);assert.equal(h.events[0].outcome,'tool_error');assert.ok(!JSON.stringify([...h.events,...h.responses]).includes('PRIVATE_CONTENT'));});

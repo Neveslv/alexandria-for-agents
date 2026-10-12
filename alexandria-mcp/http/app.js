@@ -5,7 +5,6 @@ const path = require('node:path');
 
 const {
   dispatch,
-  ensureReady,
   mcpText,
   collectSearchResults,
   collectVaultHealth,
@@ -163,8 +162,8 @@ function tokenOk(req) {
   return got === expected;
 }
 
-function candidatesFromSearch(query, limit = 5) {
-  const packed = collectSearchResults({ query, limit });
+async function candidatesFromSearch(query, limit = 5) {
+  const packed = await collectSearchResults({ query, limit });
   if (packed.error) return [];
   return packed.items.map((item) => ({
     title: item.title,
@@ -188,8 +187,8 @@ function buildDraft(body) {
   };
 }
 
-function handlePromote(body) {
-  const inbox = findInboxNote({
+async function handlePromote(body) {
+  const inbox = await findInboxNote({
     path: body.path,
     title: body.title,
   });
@@ -206,12 +205,12 @@ function handlePromote(body) {
   const kind = normalizeCaptureKind(body.kind) || inbox.kind;
   const category = String(body.category || (kind === 'decision' ? 'decisions' : 'concepts')).trim();
   const title = String(body.canonical_title || body.title || inbox.title).trim();
-  const content = inboxBodyFromMarkdown(inbox.content, inbox.title) || String(inbox.content || '').trim();
+  const content = await inboxBodyFromMarkdown(inbox.content, inbox.title) || String(inbox.content || '').trim();
   if (!title || !content) {
     return { status: 400, body: { error: 'invalid_request', message: 'title and content are required' } };
   }
 
-  const written = dispatch('vault_write', {
+  const written = await dispatch('vault_write', {
     title,
     content,
     category,
@@ -232,7 +231,7 @@ function handlePromote(body) {
     return { status: 500, body: { error: 'internal_error', message } };
   }
   const canonicalPath = relMatch[1].split('\n')[0].trim();
-  if (!markInboxPromoted(inbox.relPath, canonicalPath)) {
+  if (!await markInboxPromoted(inbox.relPath, canonicalPath)) {
     return { status: 500, body: { error: 'internal_error', message: 'Failed to mark inbox as promoted' } };
   }
   return {
@@ -247,20 +246,20 @@ function handlePromote(body) {
   };
 }
 
-function handleCapture(body) {
+async function handleCapture(body) {
   const draft = buildDraft(body);
   if (!draft.content) {
     return { status: 400, body: { error: 'invalid_request', message: 'text is required' } };
   }
   const query = String(body.query || draft.title);
-  const candidates = candidatesFromSearch(query);
+  const candidates = await candidatesFromSearch(query);
   if (!body.confirm) {
     return {
       status: 200,
       body: { confirm_required: true, candidates, draft },
     };
   }
-  const written = dispatch('vault_write', {
+  const written = await dispatch('vault_write', {
     title: draft.title,
     content: draft.content,
     category: 'sessions',
@@ -320,33 +319,33 @@ async function handle(req, res) {
     return;
   }
 
-  if (pathname === '/v1/graph' && req.method === 'GET') {
-    const result = collectGraphNeighbors({
-      path: url.searchParams.get('path') || '',
-      title: url.searchParams.get('title') || '',
-    });
-    if (result.error) {
-      json(res, result.statusCode || 400, {
-        error: result.statusCode === 404 ? 'not_found' : 'invalid_request',
-        message: result.error,
+  try {
+    if (pathname === '/v1/graph' && req.method === 'GET') {
+      const result = await collectGraphNeighbors({
+        path: url.searchParams.get('path') || '',
+        title: url.searchParams.get('title') || '',
       });
+      if (result.error) {
+        json(res, result.statusCode || 400, {
+          error: result.statusCode === 404 ? 'not_found' : 'invalid_request',
+          message: result.error,
+        });
+        return;
+      }
+      json(res, 200, result);
       return;
     }
-    json(res, 200, result);
-    return;
-  }
 
-  try {
     if (pathname === '/v1/promote' && req.method === 'POST') {
       const body = await readBody(req);
-      const result = handlePromote(body);
+      const result = await handlePromote(body);
       json(res, result.status, result.body);
       return;
     }
 
     if (pathname === '/v1/vault/health' && req.method === 'GET') {
       const limit = Number(url.searchParams.get('limit') || 20);
-      json(res, 200, collectVaultHealth({ limit }));
+      json(res, 200, await collectVaultHealth({ limit }));
       return;
     }
 
@@ -358,9 +357,9 @@ async function handle(req, res) {
         return;
       }
       const limit = body.limit || 8;
-      const recall = mcpText(dispatch('vault_recall', { query, max_tokens: body.max_tokens }));
-      const search = mcpText(dispatch('vault_search', { query, limit }));
-      const packed = collectSearchResults({ query, limit });
+      const recall = mcpText(await dispatch('vault_recall', { query, max_tokens: body.max_tokens }));
+      const search = mcpText(await dispatch('vault_search', { query, limit }));
+      const packed = await collectSearchResults({ query, limit });
       json(res, 200, { query, recall, search, items: packed.items || [] });
       return;
     }
@@ -371,7 +370,7 @@ async function handle(req, res) {
         json(res, 400, { error: 'invalid_request', message: 'path is required' });
         return;
       }
-      const content = mcpText(dispatch('vault_read', { path: notePath }));
+      const content = mcpText(await dispatch('vault_read', { path: notePath }));
       if (content.startsWith('Nota não encontrada:')) {
         json(res, 404, { error: 'not_found', message: content });
         return;
@@ -391,11 +390,12 @@ async function handle(req, res) {
         json(res, 400, { error: 'invalid_request', message: 'query is required' });
         return;
       }
-      const packed = collectSearchResults({ ...body, query });
+      const packed = await collectSearchResults({ ...body, query });
       json(res, 200, {
         query,
         items: packed.items,
-        text: mcpText(dispatch('vault_search', { ...body, query })),
+        retrieval: packed.retrieval,
+        text: mcpText(await dispatch('vault_search', { ...body, query })),
       });
       return;
     }
@@ -404,19 +404,20 @@ async function handle(req, res) {
       const page = Number(url.searchParams.get('page') || 1);
       const page_size = Number(url.searchParams.get('page_size') || url.searchParams.get('limit') || 10);
       json(res, 200, {
-        text: mcpText(dispatch('vault_recent_activity', { page, page_size })),
+        text: mcpText(await dispatch('vault_recent_activity', { page, page_size })),
       });
       return;
     }
 
     if (pathname === '/v1/capture' && req.method === 'POST') {
       const body = await readBody(req);
-      const result = handleCapture(body);
+      const result = await handleCapture(body);
       json(res, result.status, result.body);
       return;
     }
   } catch (error) {
-    json(res, error.statusCode || 500, { error: 'internal_error', message: error.message });
+    const badRequest = error?.statusCode === 400;
+    json(res, badRequest ? 400 : 500, { error: badRequest ? 'invalid_request' : 'internal_error', message: badRequest ? 'Invalid request body' : 'Operation failed' });
     return;
   }
 
@@ -424,7 +425,6 @@ async function handle(req, res) {
 }
 
 function createHandler() {
-  ensureReady();
   return handle;
 }
 

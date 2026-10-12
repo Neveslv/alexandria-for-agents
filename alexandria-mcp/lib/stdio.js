@@ -1,6 +1,6 @@
 'use strict';
 const { performance } = require('node:perf_hooks');
-function processLine(line, { handleRequest, tools, telemetry, send }) {
+async function processLine(line, { handleRequest, tools, telemetry, send }) {
   if (!line.trim()) return;
   let request;
   try { request = JSON.parse(line); }
@@ -22,7 +22,7 @@ function processLine(line, { handleRequest, tools, telemetry, send }) {
   try {
     if (isCall && !tools.has(tool)) {
       category = 'unknown_tool'; result = {isError:true,content:[{type:'text',text:'Unknown tool'}]};
-    } else result = handleRequest(request);
+    } else result = await handleRequest(request);
     if (result?.isError || result?.error) category = category === 'none' ? 'execution' : category;
   } catch {
     category = 'execution';
