@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "configIdentity": "02136f59992dd1695d8f27c8d5207f91e3ddba37404a57023baf0caded50dee0",
+  "feature": "max_lexical_raw_score",
+  "threshold": 2.2160854260092604,
+  "method": "minimum development positive maximum lexical score, one ULP margin",
+  "dataset": {
+    "name": "development",
+    "sha256": {
+      "corpus.json": "e69317a1d23c17439058efaf045e63ebacc87e36aede1de860471ddf11715cba",
+      "queries.json": "9ffefd3e1b0d32944799bbec51f5dcf740080c30a6091ca9a72499ae021217db"
+    }
+  },
+  "development": {
+    "positive_queries": 14,
+    "positive_queries_retained": 14,
+    "negative_queries": 4,
+    "negative_queries_abstained": 4
+  },
+  "experimental": true,
+  "limitations": "Vector evidence overlaps negatives; semantic-only paraphrases can be suppressed. Original and holdout gates must be evaluated without threshold changes.",
+  "evidence_sha256": "b2c74c03ed799788ad7e9ea9aadd80e18981ec058ba5a2f57584df89bedc2f62"
+}
