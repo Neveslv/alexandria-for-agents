@@ -15,3 +15,16 @@ rules/*.INSTALLED.mdc
 # Node tooling
 node_modules/
 npm-debug.log*
+
+# Private implementation planning and evaluation artifacts
+docs/superpowers/
+docs/retrieval/
+preview/
+previews/
+.task-data/
+.superpowers/
+/work/
+
+# Generated Python artifacts
+__pycache__/
+*.py[cod]
