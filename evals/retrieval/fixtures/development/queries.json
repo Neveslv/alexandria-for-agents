@@ -1,0 +1,154 @@
+[
+  {
+    "id": "lease-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Como impedir que um dono antigo escreva apos perder o lease?",
+    "relevant": [
+      "decisions/lease.md"
+    ]
+  },
+  {
+    "id": "lease-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "How can storage reject writes from a former lease owner?",
+    "relevant": [
+      "decisions/lease.md"
+    ]
+  },
+  {
+    "id": "dlq-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Quantas tentativas antecedem a fila morta?",
+    "relevant": [
+      "decisions/dlq.md"
+    ]
+  },
+  {
+    "id": "dlq-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "When should a failed message enter the dead letter queue?",
+    "relevant": [
+      "decisions/dlq.md"
+    ]
+  },
+  {
+    "id": "etag-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Como impedir sobrescrita concorrente usando ETag?",
+    "relevant": [
+      "decisions/etag.md"
+    ]
+  },
+  {
+    "id": "etag-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "How do conditional edits prevent lost updates?",
+    "relevant": [
+      "decisions/etag.md"
+    ]
+  },
+  {
+    "id": "clock-pt",
+    "group": "cross_language",
+    "language": "pt",
+    "query": "Qual relogio mede duracoes sem retroceder?",
+    "relevant": [
+      "decisions/clock.md"
+    ]
+  },
+  {
+    "id": "clock-en",
+    "group": "cross_language",
+    "language": "en",
+    "query": "Which clock should measure elapsed time reliably?",
+    "relevant": [
+      "decisions/clock.md"
+    ]
+  },
+  {
+    "id": "quota-pt",
+    "group": "updated",
+    "language": "pt",
+    "query": "Qual e a quota atual do projeto Boreal?",
+    "relevant": [
+      "decisions/quota.md"
+    ]
+  },
+  {
+    "id": "quota-en",
+    "group": "updated",
+    "language": "en",
+    "query": "What is the current Boreal request quota?",
+    "relevant": [
+      "decisions/quota.md"
+    ]
+  },
+  {
+    "id": "old-quota-pt",
+    "group": "history",
+    "language": "pt",
+    "query": "Qual era a quota Boreal antes de 8 de outubro?",
+    "relevant": [
+      "decisions/old-quota.md"
+    ]
+  },
+  {
+    "id": "old-quota-en",
+    "group": "history",
+    "language": "en",
+    "query": "What was the Boreal quota before October 8?",
+    "relevant": [
+      "decisions/old-quota.md"
+    ]
+  },
+  {
+    "id": "multi-0",
+    "group": "multi_note",
+    "language": "pt",
+    "query": "Como impedir que um dono antigo escreva apos perder o lease? Quantas tentativas antecedem a fila morta?",
+    "relevant": [
+      "decisions/lease.md",
+      "decisions/dlq.md"
+    ]
+  },
+  {
+    "id": "multi-1",
+    "group": "multi_note",
+    "language": "en",
+    "query": "How do conditional edits prevent lost updates? Which clock should measure elapsed time reliably?",
+    "relevant": [
+      "decisions/etag.md",
+      "decisions/clock.md"
+    ]
+  },
+  {
+    "id": "absent-0",
+    "group": "absent",
+    "query": "Geometria de cristais de ametista",
+    "relevant": []
+  },
+  {
+    "id": "absent-1",
+    "group": "absent",
+    "query": "Instructions for tuning a harpsichord",
+    "relevant": []
+  },
+  {
+    "id": "absent-2",
+    "group": "absent",
+    "query": "UNSEEN_development_7789",
+    "relevant": []
+  },
+  {
+    "id": "absent-3",
+    "group": "absent",
+    "query": "Receita de geleia de maracuja",
+    "relevant": []
+  }
+]

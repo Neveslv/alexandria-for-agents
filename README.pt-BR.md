@@ -16,8 +16,8 @@ Os arquivos Markdown continuam legíveis e editáveis no Obsidian. O índice SQL
 
 ## Requisitos
 
-- Node.js 18 ou mais recente
-- SQLite 3 (`sqlite3`) disponível no `PATH`
+- Node.js 24 ou mais recente
+- SQLite/FTS5 integrado ao Node.js 24; sem CLI SQLite externo
 - Um vault Obsidian existente ou um diretório que você queira inicializar
 - Para integração automática: Codex CLI, Cursor, Claude Code ou Gemini CLI
 
@@ -98,6 +98,12 @@ Variáveis de ambiente do servidor:
 | `ALEXANDRIA_SETTINGS_PATH` | Configuração opcional de expansão de busca |
 | `ALEXANDRIA_EXPANSION_CACHE` | Cache local de expansão de busca |
 
+## Telemetria local
+
+Use `--telemetry` durante a instalação para ativar logs JSONL locais com rotação e retenção limitada. Para registros MCP já existentes, defina `ALEXANDRIA_TELEMETRY=1` no ambiente do servidor e reconecte o cliente. Os logs não incluem argumentos, conteúdo das notas, resultados nem credenciais.
+
+Execute `node alexandria-mcp/telemetry-summary.js` para consultar sucessos, erros, latência mediana e p95 por ferramenta e período. Um hook opcional do Codex observa tentativas pelo cliente separadamente. Timeouts e falhas de conexão do host ficam explicitamente indisponíveis quando não podem ser observados. Veja a [configuração e os limites da telemetria](docs/telemetry.md).
+
 ## Arquivos do projeto
 
 - `alexandria-mcp/` — servidor MCP, kernel do vault, ponte HTTP e interface local.
@@ -113,3 +119,27 @@ Relatos de bugs, ideias e pull requests são bem-vindos. Leia [CONTRIBUTING.md](
 ## Autoria
 
 Criado por **Neves e Nicolas Vlad**.
+
+## Configuração de recuperação
+
+O Markdown continua sendo a fonte canônica; o índice SQLite pode ser reconstruído. A descoberta das ferramentas é imediata e as operações de dados aguardam a indexação inicial. Eventos de arquivos são agrupados por 200 ms e a reconciliação ocorre a cada cinco minutos. Pastas inacessíveis preservam as entradas anteriores e registram falhas no estado do índice. Escritas MCP atualizam o índice antes de retornar sucesso.
+
+As opções experimentais começam desligadas: `ALEXANDRIA_RETRIEVAL_RRF=1`, `ALEXANDRIA_RETRIEVAL_AUTHORITY=1` e `ALEXANDRIA_ABSTENTION=1`. `ALEXANDRIA_EMBEDDING_MODE` usa `hash` por padrão; `lexical` desativa vetores; `trained` usa um modelo local preparado explicitamente, com fallback lexical. Nenhuma ferramenta baixa modelos. `vault_search` aceita `explain: true` para mostrar evidências do ranking; essas evidências nunca entram na telemetria de produção.
+
+O runtime opcional está fixado em `alexandria-mcp/package.json`. Instale-o explicitamente com `npm install --prefix alexandria-mcp`. Mudanças de provedor, modelo, revisão ou dimensão invalidam os vetores em cache. Os scores de ranking não são probabilidades de relevância. Experimentos de qualidade exigem conjuntos de desenvolvimento e holdout congelados antes da promoção.
+
+Planos, specs, relatórios locais e previews são ignorados pelo Git e jamais devem ser adicionados ou publicados.
+
+Prepare o modelo opcional explicitamente, usando seu próprio caminho absoluto:
+
+```powershell
+node alexandria-mcp/bin/prepare-model.js --model-root C:\AlexandriaModels
+$env:ALEXANDRIA_MODEL_DIR = 'C:\AlexandriaModels'
+$env:ALEXANDRIA_EMBEDDING_MODE = 'trained'
+```
+
+O perfil fixa revisão, dimensão e hashes. O download q8 ocupa aproximadamente 136 MB. A carga inicial, a ingestão e o uso de memória são medidos separadamente da latência das consultas aquecidas. As fontes e licenças estão em `THIRD_PARTY_NOTICES.md`.
+
+Para o servidor instalado, execute explicitamente `npm install --prefix "$env:USERPROFILE\.alexandria\mcp-server"` no PowerShell (Linux: `npm install --prefix "$HOME/.alexandria/mcp-server"`) e use seu `bin/prepare-model.js`. Instalar dependências no checkout não as instala no servidor copiado.
+
+A configuração opcional avaliada usa embeddings treinados e autoridade, com RRF e abstenção desligados. As variantes RRF perderam recall de múltiplas notas; o experimento congelado de abstenção suprimiu positivos e foi rejeitado. O padrão hash mantém compatibilidade. As opções globais se aplicam às notas; `entity_type: all` preserva os contratos existentes de observações/relações.

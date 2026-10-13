@@ -1,0 +1,64 @@
+name: Retrieval regression
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      real_model:
+        description: Explicitly download and smoke-test the pinned optional model
+        type: boolean
+        default: false
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Isolated unit and integration tests
+        shell: bash
+        run: |
+          TASK_ROOT=$(mktemp -d)
+          export ALEXANDRIA_VAULT_DIR="$TASK_ROOT/vault"
+          export ALEXANDRIA_INDEX_DB="$TASK_ROOT/index.db"
+          export ALEXANDRIA_SETTINGS_PATH="$TASK_ROOT/settings.json"
+          export ALEXANDRIA_EXPANSION_CACHE="$TASK_ROOT/expansion.json"
+          export ALEXANDRIA_TELEMETRY_DIR="$TASK_ROOT/telemetry"
+          export ALEXANDRIA_TELEMETRY=0
+          node --test tests/*.test.js
+          python evals/retrieval/benchmark.py --help
+      - name: Keep private planning out of published trees
+        shell: bash
+        run: |
+          if git ls-files | grep -E '(^docs/(superpowers|retrieval)/|(^|/)(preview|previews)/|^\.task-data/)'; then
+            echo "Private planning or preview files were tracked"; exit 1
+          fi
+
+  real-model:
+    if: github.event_name == 'workflow_dispatch' && inputs.real_model
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install optional runtime explicitly
+        run: npm ci --prefix alexandria-mcp
+      - name: Cache pinned checksummed model
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/alexandria-models
+          key: e5-small-q8-${{ hashFiles('alexandria-mcp/lib/retrieval/model-profile.json') }}
+      - name: Prepare and validate pinned files
+        run: node alexandria-mcp/bin/prepare-model.js --model-root "$RUNNER_TEMP/alexandria-models"
+      - name: Offline embedding smoke test
+        env:
+          ALEXANDRIA_MODEL_DIR: ${{ runner.temp }}/alexandria-models
+        run: node alexandria-mcp/bin/model-smoke.js

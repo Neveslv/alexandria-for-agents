@@ -16,8 +16,8 @@ Markdown files remain readable and editable in Obsidian. The SQLite index is aux
 
 ## Requirements
 
-- Node.js 18 or later
-- SQLite 3 (`sqlite3`) available on `PATH`
+- Node.js 24 or later
+- Built-in SQLite/FTS5 through Node.js 24; no SQLite CLI required
 - An existing Obsidian vault, or a directory you want to initialize
 - For automatic integration: Codex CLI, Cursor, Claude Code, or Gemini CLI
 
@@ -98,6 +98,12 @@ Server environment variables:
 | `ALEXANDRIA_SETTINGS_PATH` | Optional search-expansion settings |
 | `ALEXANDRIA_EXPANSION_CACHE` | Local search-expansion cache |
 
+## Local telemetry
+
+Use `--telemetry` during installation to opt in to local JSONL logs with rotation and limited retention. For existing registrations, set `ALEXANDRIA_TELEMETRY=1` in the MCP server environment and reconnect the client. Logs exclude arguments, note content, results, and credentials.
+
+Run `node alexandria-mcp/telemetry-summary.js` to view successes, errors, median latency, and p95 by tool and period. An optional Codex hook observes client attempts separately. Host timeouts and connection failures remain explicitly unavailable when not observable. See [telemetry setup and limits](docs/telemetry.md).
+
 ## Project files
 
 - `alexandria-mcp/` — MCP server, vault kernel, HTTP bridge, and local interface.
@@ -113,3 +119,27 @@ Bug reports, ideas, and pull requests are welcome. Please read [CONTRIBUTING.md]
 ## Authors
 
 Created by **Neves and Nicolas Vlad**.
+
+## Retrieval configuration
+
+Markdown remains canonical; the SQLite index is rebuildable. Discovery is lazy; data operations await initial indexing. Native watchers debounce external edits (200 ms), with reconciliation every five minutes. Inaccessible folders preserve previous index rows and report failures. MCP writes update the index before success.
+
+Experimental retrieval settings default off: `ALEXANDRIA_RETRIEVAL_RRF=1`, `ALEXANDRIA_RETRIEVAL_AUTHORITY=1`, `ALEXANDRIA_ABSTENTION=1`. `ALEXANDRIA_EMBEDDING_MODE` defaults to `hash`; `lexical` disables vectors; `trained` uses an explicitly prepared local model with lexical fallback. No tool downloads a model. `vault_search` accepts `explain: true` to return ranking evidence; it is never included in production telemetry.
+
+The optional trained runtime is pinned in `alexandria-mcp/package.json`. Install it explicitly with `npm install --prefix alexandria-mcp`; prepare local model files/checksums separately. Changing provider/model/revision/dimension invalidates cached vectors. Ranking scores are not relevance probabilities. Quality experiments require frozen development and holdout data before promotion.
+
+Local planning, specs, reports and previews are ignored by Git and must never be staged or published.
+
+Prepare the pinned optional model explicitly (replace the model root with your own absolute path):
+
+```powershell
+node alexandria-mcp/bin/prepare-model.js --model-root C:\AlexandriaModels
+$env:ALEXANDRIA_MODEL_DIR = 'C:\AlexandriaModels'
+$env:ALEXANDRIA_EMBEDDING_MODE = 'trained'
+```
+
+The profile fixes the model revision/dimension and hashes; changing identity invalidates cache. The q8 model download is approximately136MB. Initial model load/indexing and memory use are separate from warm-query latency. See `THIRD_PARTY_NOTICES.md` for model/dependency sources and licenses.
+
+For an installed server, run `npm install --prefix "$HOME/.alexandria/mcp-server"` explicitly (PowerShell: `npm install --prefix "$env:USERPROFILE\.alexandria\mcp-server"`) and use its `bin/prepare-model.js`. Installing dependencies in the source checkout does not install them in the copied server.
+
+The evaluated optional configuration uses trained embeddings plus authority, with RRF and abstention off. RRF variants lost multi-note recall; the frozen abstention experiment suppressed positives and was rejected. Default hash mode remains compatible. Global settings apply to notes; `entity_type: all` preserves the existing structured observation/relation contracts.

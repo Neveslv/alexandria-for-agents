@@ -1,0 +1,12 @@
+{
+  "name": "development",
+  "version": 1,
+  "frozen_before_candidate_measurements": true,
+  "corpus": "corpus.json",
+  "sha256": {
+    "corpus.json": "8de4bd91385dc3d11143a5e59e020dc3134b5a272ab4dbdaa56c618a29ef955d",
+    "queries.json": "1e8f66ae1738a8ea38b7df685bc7eb4878971665b77a252116990852113e14dc"
+  },
+  "provenance": "Independent synthetic Codex fixtures frozen 2026-10-12; no model outputs consulted",
+  "calibration_allowed": true
+}

@@ -13,12 +13,14 @@ const INSTALL_DIR = path.join(HOME, '.alexandria', 'mcp-server');
 const INDEX_DB = path.join(HOME, '.alexandria', 'vault-index.db');
 const START = '<!-- BEGIN Alexandria Agent Memory -->';
 const END = '<!-- END Alexandria Agent Memory -->';
+let telemetryEnabled = false;
 
 function parseArgs(argv) {
   const args = { vault: '', client: 'codex', dryRun: false };
   for (let index = 0; index < argv.length; index += 1) {
     const flag = argv[index];
     if (flag === '--dry-run') args.dryRun = true;
+    else if (flag === '--telemetry') args.telemetry = true;
     else if (['--vault', '--client'].includes(flag)) {
       const value = argv[++index];
       if (!value || value.startsWith('--')) throw new Error(`Missing value for ${flag}`);
@@ -33,7 +35,7 @@ function usage() {
   return [
     'Alexandria for Agents installer',
     '',
-    'Usage: node install.js --vault PATH [--client codex|cursor|claude-code|gemini-cli|all] [--dry-run]',
+    'Usage: node install.js --vault PATH [--client codex|cursor|claude-code|gemini-cli|all] [--dry-run] [--telemetry]',
     '',
     'Clients need to be installed separately. “all” configures every supported client adapter.',
   ].join('\n');
@@ -118,7 +120,7 @@ function cursorConfig(server, vault, dryRun) {
     config.mcpServers.alexandria = {
       command: process.execPath,
       args: [server],
-      env: { ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: 'Cursor', ALEXANDRIA_INDEX_DB: INDEX_DB },
+      env: { ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: 'Cursor', ALEXANDRIA_INDEX_DB: INDEX_DB, ALEXANDRIA_TELEMETRY: telemetryEnabled ? '1' : '0' },
     };
   }, dryRun);
   if (dryRun) {
@@ -143,6 +145,7 @@ function configureCodex(server, vault, dryRun) {
       '--env', `ALEXANDRIA_VAULT_DIR=${vault}`,
       '--env', 'ALEXANDRIA_NAMESPACE=Codex',
       '--env', `ALEXANDRIA_INDEX_DB=${INDEX_DB}`,
+      '--env', `ALEXANDRIA_TELEMETRY=${telemetryEnabled ? '1' : '0'}`,
       '--', process.execPath, server];
     if (dryRun) console.log('DRY RUN: codex mcp add alexandria ...');
     else {
@@ -163,6 +166,7 @@ function configureClaude(server, vault, dryRun) {
       '-e', `ALEXANDRIA_VAULT_DIR=${vault}`,
       '-e', 'ALEXANDRIA_NAMESPACE=Claude',
       '-e', `ALEXANDRIA_INDEX_DB=${INDEX_DB}`,
+      '-e', `ALEXANDRIA_TELEMETRY=${telemetryEnabled ? '1' : '0'}`,
       'alexandria', '--', process.execPath, server];
     if (dryRun) console.log('DRY RUN: claude mcp add --scope user alexandria ...');
     else {
@@ -181,7 +185,7 @@ function configureGemini(server, vault, dryRun) {
     config.mcpServers.alexandria = {
       command: process.execPath,
       args: [server],
-      env: { ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: 'Gemini CLI', ALEXANDRIA_INDEX_DB: INDEX_DB },
+      env: { ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: 'Gemini CLI', ALEXANDRIA_INDEX_DB: INDEX_DB, ALEXANDRIA_TELEMETRY: telemetryEnabled ? '1' : '0' },
     };
   }, dryRun);
   installInstruction(path.join(HOME, '.gemini', 'GEMINI.md'), renderPrompt(vault, 'Gemini CLI'), dryRun);
@@ -196,27 +200,35 @@ function copyServer(dryRun) {
     return;
   }
   fs.mkdirSync(path.join(INSTALL_DIR, 'lib'), { recursive: true });
-  for (const relative of ['server.js', path.join('lib', 'kernel.js'), 'AGENTS.md']) {
-    const source = path.join(SOURCE, relative);
-    if (fs.existsSync(source)) {
-      const target = path.join(INSTALL_DIR, relative === 'AGENTS.md' ? 'AGENTS.alexandria.md' : relative);
-      backup(target);
-      fs.copyFileSync(source, target);
+  const files = ['server.js', 'telemetry-summary.js', 'telemetry-hook.js', 'package.json', 'package-lock.json', 'AGENTS.md'];
+  function collect(dir, allFiles = false) {
+    for (const item of fs.readdirSync(path.join(SOURCE,dir), {withFileTypes:true})) {
+      const rel = path.join(dir,item.name);
+      if (item.isDirectory()) collect(rel, allFiles);
+      else if (item.isFile() && (allFiles || /\.(js|json)$/.test(item.name))) files.push(rel);
     }
+  }
+  collect('lib');
+  collect('bin', true);
+  collect('http');
+  collect('web', true);
+  for (const relative of files) {
+    const source = path.join(SOURCE,relative);
+    if (!fs.existsSync(source)) continue;
+    const target = path.join(INSTALL_DIR, relative === 'AGENTS.md' ? 'AGENTS.alexandria.md' : relative);
+    fs.mkdirSync(path.dirname(target),{recursive:true}); backup(target); fs.copyFileSync(source,target);
   }
   console.log(`Installed MCP server in ${INSTALL_DIR}`);
 }
 
 function initialize(vault, agent, dryRun) {
-  const sqlite = process.platform === 'win32' ? 'sqlite3.exe' : 'sqlite3';
-  if (!executableAvailable(sqlite)) throw new Error('sqlite3 is required and must be available on PATH.');
   if (dryRun) {
     console.log(`DRY RUN: initialize vault ${vault} and index ${INDEX_DB}`);
     return;
   }
   fs.mkdirSync(vault, { recursive: true });
   const result = run(process.execPath, [path.join(INSTALL_DIR, 'server.js'), '--init'], {
-    env: { ...process.env, ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: agent, ALEXANDRIA_INDEX_DB: INDEX_DB },
+    env: { ...process.env, ALEXANDRIA_VAULT_DIR: vault, ALEXANDRIA_NAMESPACE: agent, ALEXANDRIA_INDEX_DB: INDEX_DB, ALEXANDRIA_TELEMETRY: telemetryEnabled ? '1' : '0' },
   });
   if (result.status !== 0) throw new Error(`Vault initialization failed: ${result.stderr || result.stdout}`);
   process.stdout.write(result.stdout);
@@ -224,7 +236,9 @@ function initialize(vault, agent, dryRun) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  telemetryEnabled = args.telemetry === true;
   if (args.help) { console.log(usage()); return; }
+  if (Number(process.versions.node.split('.')[0]) < 24) throw new Error('Node.js 24 or newer is required (built-in SQLite/FTS5).');
   if (!args.vault) throw new Error('--vault is required and must point to the Obsidian vault.');
   if (!path.isAbsolute(args.vault)) throw new Error(`Vault path must be absolute: ${args.vault}`);
   const vault = path.resolve(args.vault);

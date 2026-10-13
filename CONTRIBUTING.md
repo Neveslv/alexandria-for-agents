@@ -22,7 +22,7 @@ External contributors should work from a fork; direct write access to the main r
 
 ## Development checks
 
-This repository does not currently define an automated test suite. For JavaScript changes, run syntax checks for the files you changed. For example:
+Run the dependency-free telemetry and protocol tests with `node --test tests/*.test.js` (Node.js 24 or later; Python 3.12+ for retrieval evals). For JavaScript changes, also run syntax checks for the files you changed. For example:
 
 ```bash
 node --check install.js
@@ -50,3 +50,7 @@ Do not run the installer against a real vault unless you intend to modify it. Pr
 - [ ] I ran the relevant checks and listed their results.
 - [ ] I updated documentation in both languages when needed.
 - [ ] I described compatibility or migration implications.
+
+Retrieval tests must run with isolated `ALEXANDRIA_VAULT_DIR`, `ALEXANDRIA_INDEX_DB`, `ALEXANDRIA_SETTINGS_PATH`, `ALEXANDRIA_EXPANSION_CACHE` and telemetry directories. Never use the personal vault or active client registration for test runs. The native SQLite/FTS5 index is auxiliary and rebuildable.
+
+Planning/specification reports under `docs/superpowers/`, local reports under `docs/retrieval/`, `.task-data/`, and generated previews are private artifacts and must never be tracked or published. Synthetic evaluation fixture sources and tests may be tracked; measured outputs remain local. CI covers Windows/Linux Node24 and mock embeddings. Latency gates require sequential same-machine comparisons, not absolute timing on shared runners.

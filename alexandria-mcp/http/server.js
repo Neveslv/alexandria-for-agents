@@ -20,3 +20,13 @@ const server = http.createServer(handler);
 server.listen(port, host, () => {
   log(`HTTP v1 listening on http://${host}:${port} vault=${getVaultDir()}`);
 });
+
+let shuttingDown = false;
+for (const signal of ['SIGINT','SIGTERM']) process.on(signal, () => {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  server.close(async () => {
+    try { await require('../lib/kernel').close(); }
+    catch { process.exitCode = 1; process.stderr.write('Alexandria shutdown failed.\n'); }
+  });
+});

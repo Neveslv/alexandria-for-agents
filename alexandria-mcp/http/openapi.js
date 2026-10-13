@@ -39,7 +39,7 @@ module.exports = {
         summary: 'Proxy vault_search',
         requestBody: {
           required: true,
-          content: { 'application/json': { schema: { type: 'object', required: ['query'], properties: { query: { type: 'string' }, limit: { type: 'number' } } } } },
+          content: { 'application/json': { schema: { type: 'object', required: ['query'], properties: { query: { type: 'string' }, limit: { type: 'number' }, explain: {type:'boolean'}, agent: {type:'string'}, project: {type:'string'}, category: {type:'string'}, tags: {type:'array',items:{type:'string'}}, query_intent: {type:'string',enum:['current','historical','neutral']} } } } },
         },
         responses: { 200: { description: 'items + formatted text' } },
       },

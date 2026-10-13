@@ -1,0 +1,21 @@
+{
+  "name": "original",
+  "version": 1,
+  "frozen_before_candidate_measurements": true,
+  "corpus": "corpus-600.json",
+  "sha256": {
+    "baselines/results-ai-lexical-120.json": "062f54a9f4f6b80c85fef0f1f2f36409af094c29eb720f2d87a633cf110e2504",
+    "baselines/results-ai-lexical-600.json": "58f4b4b851188ce287b2d7376732e496b4882cbaf2baa233fb6791dd16a48b6b",
+    "baselines/results-ai-local-120.json": "e3d529d81384788bf92e8c6633099d613176c2b4bace533a73efd0ca8174e928",
+    "baselines/results-ai-local-600.json": "fa00236023dd32880ed72a4ebb76b8f9323f83d6217df99cdf2b052f5cce8577",
+    "baselines/results-installed-120.json": "438940371fd680cced10074333b81a3af5fad96d3fd0c1811f0e19f94c21b517",
+    "baselines/results-installed-600.json": "4be7861ae720dfb6ccf7dd40689f94a47b1b68c0c05f1f47669acc18ae7ac625",
+    "baselines/results-published-120.json": "40f2cd42f57aed30642e378810687629d11f727f0b382705de1dddd2d32242fa",
+    "corpus-120.json": "9a200622b10e825f58f14e13d484a3f21558bf340992a8c068ce839f1081c785",
+    "corpus-600.json": "3c8cbdeb95ef7262d21cd74b301826bba8a1bbd8e21f6d4a003ec4f033eb5625",
+    "queries.json": "c6bcbdbe9a7c982368bb57a4c747a5bc1cc108a9ee718e9a8661e3d2c31eb997",
+    "source-manifest.json": "49dc70f96f53df3cc8975a9e5e55e43881006423608caa41dfeb4d03f7f91ba2"
+  },
+  "provenance": "Original synthetic Codex benchmark 2026-10-11",
+  "calibration_allowed": false
+}

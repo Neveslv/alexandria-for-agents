@@ -1,0 +1,230 @@
+[
+  {
+    "path": "decisions/checksum.md",
+    "title": "Checksum transferido",
+    "body": "# Checksum transferido\n\nUm receptor calcula SHA-256 depois da transferencia e compara com o manifesto antes de publicar o arquivo.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/drain.md",
+    "title": "Graceful drain",
+    "body": "# Graceful drain\n\nOn shutdown stop accepting requests, wait for active requests up to nine seconds, then terminate remaining work.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/watermark.md",
+    "title": "Watermark de eventos",
+    "body": "# Watermark de eventos\n\nEventos atrasados entram ate o watermark mais dois minutos. Depois disso seguem para reconciliacao separada.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/bulkhead.md",
+    "title": "Isolamento de recursos",
+    "body": "# Isolamento de recursos\n\nSeparate worker pools for billing and analytics prevent a slow analytics job from exhausting billing capacity.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/region.md",
+    "title": "Regiao atual Cedro",
+    "body": "# Regiao atual Cedro\n\nDesde 2026-10-09 os backups Cedro usam regiao sul. Esta decisao substitui a regiao norte.",
+    "entities": [],
+    "kind": "fact",
+    "status": "current",
+    "modified": "2026-10-10T00:00:00Z",
+    "mtime": 1791590400
+  },
+  {
+    "path": "decisions/old-region.md",
+    "title": "Regiao historica Cedro",
+    "body": "# Regiao historica Cedro\n\nAntes de 2026-10-09 os backups Cedro usavam regiao norte. Decisao historica superseded.",
+    "entities": [],
+    "kind": "fact",
+    "status": "superseded",
+    "modified": "2026-10-02T00:00:00Z",
+    "mtime": 1790899200
+  },
+  {
+    "path": "sessions/noise-000.md",
+    "title": "Checksum transferido visual review",
+    "body": "# Checksum transferido visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-001.md",
+    "title": "Graceful drain visual review",
+    "body": "# Graceful drain visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-002.md",
+    "title": "Watermark de eventos visual review",
+    "body": "# Watermark de eventos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-003.md",
+    "title": "Isolamento de recursos visual review",
+    "body": "# Isolamento de recursos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-004.md",
+    "title": "Regiao atual Cedro visual review",
+    "body": "# Regiao atual Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-005.md",
+    "title": "Regiao historica Cedro visual review",
+    "body": "# Regiao historica Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-006.md",
+    "title": "Checksum transferido visual review",
+    "body": "# Checksum transferido visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-007.md",
+    "title": "Graceful drain visual review",
+    "body": "# Graceful drain visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-008.md",
+    "title": "Watermark de eventos visual review",
+    "body": "# Watermark de eventos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-009.md",
+    "title": "Isolamento de recursos visual review",
+    "body": "# Isolamento de recursos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-010.md",
+    "title": "Regiao atual Cedro visual review",
+    "body": "# Regiao atual Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-011.md",
+    "title": "Regiao historica Cedro visual review",
+    "body": "# Regiao historica Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-012.md",
+    "title": "Checksum transferido visual review",
+    "body": "# Checksum transferido visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-013.md",
+    "title": "Graceful drain visual review",
+    "body": "# Graceful drain visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-014.md",
+    "title": "Watermark de eventos visual review",
+    "body": "# Watermark de eventos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-015.md",
+    "title": "Isolamento de recursos visual review",
+    "body": "# Isolamento de recursos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-016.md",
+    "title": "Regiao atual Cedro visual review",
+    "body": "# Regiao atual Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-017.md",
+    "title": "Regiao historica Cedro visual review",
+    "body": "# Regiao historica Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-018.md",
+    "title": "Checksum transferido visual review",
+    "body": "# Checksum transferido visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-019.md",
+    "title": "Graceful drain visual review",
+    "body": "# Graceful drain visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-020.md",
+    "title": "Watermark de eventos visual review",
+    "body": "# Watermark de eventos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-021.md",
+    "title": "Isolamento de recursos visual review",
+    "body": "# Isolamento de recursos visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-022.md",
+    "title": "Regiao atual Cedro visual review",
+    "body": "# Regiao atual Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  },
+  {
+    "path": "sessions/noise-023.md",
+    "title": "Regiao historica Cedro visual review",
+    "body": "# Regiao historica Cedro visual review\n\nDiscussion about colors, typography and icons only. No operational guidance or technical decision.",
+    "entities": [],
+    "kind": "fact"
+  }
+]

@@ -8,5 +8,11 @@
   },
   "scripts": {
     "http": "node http/server.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "optionalDependencies": {
+    "@huggingface/transformers": "3.8.1"
   }
 }
