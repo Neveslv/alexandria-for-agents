@@ -120,6 +120,12 @@ Relatos de bugs, ideias e pull requests são bem-vindos. Leia [CONTRIBUTING.md](
 
 Criado por **Neves e Nicolas Vlad**.
 
+## CI/CD e publicações
+
+`.github/workflows/retrieval.yml` executa os testes Node.js e a verificação da CLI de retrieval em pushes para `main` e pull requests direcionados a `main`. O teste opcional com modelo real continua disponível por execução manual.
+
+Depois que a matriz de CI passa em um push para `main`, o job de release publica um pré-lançamento no GitHub com um ZIP do código daquele commit. Alexandria é local-first e cada instalação usa o vault privado do usuário; por isso, o CD distribui a aplicação em vez de hospedar um vault ou uma API compartilhados.
+
 ## Configuração de recuperação
 
 O Markdown continua sendo a fonte canônica; o índice SQLite pode ser reconstruído. A descoberta das ferramentas é imediata e as operações de dados aguardam a indexação inicial. Eventos de arquivos são agrupados por 200 ms e a reconciliação ocorre a cada cinco minutos. Pastas inacessíveis preservam as entradas anteriores e registram falhas no estado do índice. Escritas MCP atualizam o índice antes de retornar sucesso.

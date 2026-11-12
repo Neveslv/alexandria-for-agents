@@ -1,13 +1,18 @@
-name: Retrieval regression
+name: Alexandria CI/CD
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
     inputs:
       real_model:
         description: Explicitly download and smoke-test the pinned optional model
         type: boolean
         default: false
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
@@ -62,3 +67,27 @@ jobs:
         env:
           ALEXANDRIA_MODEL_DIR: ${{ runner.temp }}/alexandria-models
         run: node alexandria-mcp/bin/model-smoke.js
+
+  release:
+    name: Publish downloadable release
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package repository source
+        run: git archive --format=zip --output "$RUNNER_TEMP/Alexandria-for-Agents-${GITHUB_SHA}.zip" "$GITHUB_SHA"
+      - name: Publish pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: deploy-${{ github.run_id }}-${{ github.run_attempt }}
+          name: Automated deployment ${{ github.sha }}
+          target_commitish: ${{ github.sha }}
+          prerelease: true
+          make_latest: false
+          generate_release_notes: true
+          files: ${{ runner.temp }}/Alexandria-for-Agents-${{ github.sha }}.zip
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}

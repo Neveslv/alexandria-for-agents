@@ -120,6 +120,12 @@ Bug reports, ideas, and pull requests are welcome. Please read [CONTRIBUTING.md]
 
 Created by **Neves and Nicolas Vlad**.
 
+## CI/CD and releases
+
+`.github/workflows/retrieval.yml` runs the Node.js tests and retrieval CLI smoke check on pushes to `main` and pull requests targeting `main`. The optional real-model smoke test remains a manual dispatch.
+
+After the CI matrix succeeds on a push to `main`, the release job publishes a GitHub pre-release with a ZIP of that commit's source. Alexandria is local-first and each installation uses a private user vault, so CD distributes the application instead of hosting a shared vault or API.
+
 ## Retrieval configuration
 
 Markdown remains canonical; the SQLite index is rebuildable. Discovery is lazy; data operations await initial indexing. Native watchers debounce external edits (200 ms), with reconciliation every five minutes. Inaccessible folders preserve previous index rows and report failures. MCP writes update the index before success.
